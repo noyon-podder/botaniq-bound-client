@@ -11,7 +11,7 @@ import MenuSidebarToggle from "../custom/MenuSidebarToggle";
 const Navbar = () => {
   const [searchShow, setSearchShow] = useState(false);
   return (
-    <div className="bg-accent  py-6 lg:px-10 px-5">
+    <div className="bg-accent  py-6 lg:px-10 px-5 fixed top-0 w-full">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-5 ">
           <MenuSidebarToggle />
@@ -19,7 +19,7 @@ const Navbar = () => {
             href={"/"}
             className="text-[22px] font-semibold text-foreground"
           >
-            Botaniq <span className="text-primary">Bound</span>
+            Leaf <span className="text-primary">Link</span>
           </Link>
         </div>
 

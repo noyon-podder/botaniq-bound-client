@@ -26,7 +26,7 @@ const MenuSidebarToggle = () => {
               href={"/"}
               className="text-[24px] font-semibold text-foreground"
             >
-              Botaniq <span className="text-primary">Bound</span>
+              Leaf <span className="text-primary">Link</span>
             </Link>
           </div>
 
