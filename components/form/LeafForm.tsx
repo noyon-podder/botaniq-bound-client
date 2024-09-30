@@ -21,17 +21,18 @@ interface IProps extends FormConfig {
 const LeafForm = ({ children, defaultValues, resolver, onSubmit }: IProps) => {
   const formConfig: FormConfig = {};
 
-  if (!!defaultValues) {
+  if (defaultValues) {
     formConfig["defaultValues"] = defaultValues;
   }
 
-  if (!!resolver) {
+  if (resolver) {
     formConfig["resolver"] = resolver;
   }
 
   const methods = useForm(formConfig);
 
   const submit: SubmitHandler<FieldValues> = (data) => {
+    console.log("LEAF FORM", data);
     onSubmit(data);
     methods.reset();
   };

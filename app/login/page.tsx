@@ -3,14 +3,24 @@
 import LeafForm from "@/components/form/LeafForm";
 import LeafInput from "@/components/form/LeafInput";
 import { Button } from "@/components/ui/button";
+import { useUserLogin } from "@/hooks/auth.hook";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React from "react";
 import { FieldValues, SubmitHandler } from "react-hook-form";
 
 const LoginPage = () => {
+  const router = useRouter();
+  const { mutate: handleUserLogin, isSuccess } = useUserLogin();
   const handleLoginForm: SubmitHandler<FieldValues> = (data) => {
     console.log(data);
+
+    handleUserLogin(data);
   };
+
+  if (isSuccess) {
+    router.push("/");
+  }
   return (
     <>
       <div className="flex items-center justify-center h-screen">
@@ -33,7 +43,7 @@ const LoginPage = () => {
               />
               <LeafInput
                 type="password"
-                name="Password"
+                name="password"
                 label="Password"
                 className="bg-transparent dark:bg-transparent"
               />
