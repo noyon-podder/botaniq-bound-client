@@ -1,4 +1,3 @@
-import { ModeToggle } from "@/components/ThemeToggle";
 import { Button } from "@/components/ui/button";
 import React from "react";
 
@@ -8,7 +7,6 @@ const HomePage = () => {
       <Button className="bg-custom-main dark:bg-green-600 text-white">
         Hello Developer
       </Button>
-      <ModeToggle />
     </div>
   );
 };
