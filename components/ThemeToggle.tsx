@@ -15,18 +15,24 @@ export function ModeToggle() {
   return (
     <>
       {toggle ? (
-        <Button variant={"outline"} onClick={() => setToggle(!toggle)}>
-          <Sun
-            onClick={() => setTheme("light")}
-            className="h-[1.2rem] w-[1.2rem] "
-          />
+        <Button
+          variant={"outline"}
+          onClick={() => {
+            setToggle(!toggle);
+            setTheme("light");
+          }}
+        >
+          <Sun className="h-[1.2rem] w-[1.2rem] " />
         </Button>
       ) : (
-        <Button variant={"outline"} onClick={() => setToggle(!toggle)}>
-          <Moon
-            onClick={() => setTheme("dark")}
-            className="h-[1.2rem] w-[1.2rem] "
-          />
+        <Button
+          variant={"outline"}
+          onClick={() => {
+            setToggle(!toggle);
+            setTheme("dark");
+          }}
+        >
+          <Moon className="h-[1.2rem] w-[1.2rem] " />
         </Button>
       )}
     </>
