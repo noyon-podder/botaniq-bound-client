@@ -4,7 +4,7 @@ import React from "react";
 
 const HomePage = () => {
   return (
-    <div>
+    <div className="bg-white">
       <Button className="bg-custom-main dark:bg-green-600 text-white">
         Hello Developer
       </Button>
