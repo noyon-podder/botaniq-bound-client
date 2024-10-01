@@ -135,3 +135,9 @@ export const resetPassword = async (payload: TResetPassword) => {
     return { error: error.message || "An unknown error occurred." };
   }
 };
+
+//LOGOUT USER
+export const logout = () => {
+  cookies().delete("accessToken");
+  cookies().delete("refreshToken");
+};

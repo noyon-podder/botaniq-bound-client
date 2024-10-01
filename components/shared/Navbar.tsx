@@ -7,11 +7,32 @@ import { Button } from "../ui/button";
 import { ThemeToggle } from "./ThemeToggle";
 import { useState } from "react";
 import MenuSidebarToggle from "../custom/MenuSidebarToggle";
+import { useUser } from "@/context/UserProvider";
+import { logout } from "@/services/AuthService";
+import { protectedRoutes } from "@/constant";
+import { usePathname, useRouter } from "next/navigation";
+import { toast } from "@/hooks/use-toast";
 
 const Navbar = () => {
   const [searchShow, setSearchShow] = useState(false);
+  const { user, setIsLoading: userLoading } = useUser();
+  const pathname = usePathname();
+  const router = useRouter();
+
+  const handleLogout = () => {
+    logout();
+    userLoading(true);
+
+    toast({
+      title: "Logged out successfully",
+    });
+    if (protectedRoutes.some((route) => pathname.match(route))) {
+      router.push("/");
+    }
+  };
+
   return (
-    <div className="bg-accent h-[70px] lg:h-[80px] py-4 lg:px-10 px-5 fixed top-0 w-full">
+    <div className="bg-accent lg:h-[80px] py-4 lg:px-10 px-5 fixed top-0 w-full">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-5 ">
           <MenuSidebarToggle />
@@ -37,9 +58,20 @@ const Navbar = () => {
             size={28}
             className="cursor-pointer lg:hidden text-foreground"
           />
-          <Link href="/login" className="hidden lg:block">
-            <Button>Login</Button>
-          </Link>
+          {!user?.email ? (
+            <Link href="/login" className="hidden lg:block">
+              <Button>Login</Button>
+            </Link>
+          ) : (
+            <Button
+              onClick={() => handleLogout()}
+              className=""
+              variant={"outline"}
+              size="sm"
+            >
+              Logout
+            </Button>
+          )}
           <ThemeToggle />
         </div>
       </div>

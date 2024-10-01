@@ -22,7 +22,7 @@ export const useRegistration = () => {
     },
     onSuccess: () => {
       toast({
-        description: "User created successfully.",
+        title: "User created successfully.",
       });
     },
     onError: (error: any) => {
@@ -30,7 +30,7 @@ export const useRegistration = () => {
 
       toast({
         variant: "destructive",
-        description: error.message || "An unknown error occurred.",
+        title: error.message || "An unknown error occurred.",
       });
     },
   });
@@ -49,7 +49,7 @@ export const useUserLogin = () => {
     },
     onSuccess: () => {
       toast({
-        description: "User Login successfully.",
+        title: "User Login successfully.",
       });
     },
     onError: (error: any) => {
@@ -57,7 +57,7 @@ export const useUserLogin = () => {
 
       toast({
         variant: "destructive",
-        description: error.message || "An unknown error occurred.",
+        title: error.message || "An unknown error occurred.",
       });
     },
   });
@@ -76,7 +76,7 @@ export const useForgotPassword = () => {
     },
     onSuccess: () => {
       toast({
-        description: "User Find Successfully",
+        title: "User Find Successfully",
       });
     },
     onError: (error: any) => {
@@ -84,7 +84,7 @@ export const useForgotPassword = () => {
 
       toast({
         variant: "destructive",
-        description: error.message || "An unknown error occurred.",
+        title: error.message || "An unknown error occurred.",
       });
     },
   });
@@ -107,7 +107,7 @@ export const useResetPassword = () => {
     },
     onSuccess: () => {
       toast({
-        description: "Password Reset Successfully",
+        title: "Password Reset Successfully",
       });
     },
     onError: (error: any) => {
@@ -115,7 +115,7 @@ export const useResetPassword = () => {
 
       toast({
         variant: "destructive",
-        description: error.message || "An unknown error occurred.",
+        title: error.message || "An unknown error occurred.",
       });
     },
   });

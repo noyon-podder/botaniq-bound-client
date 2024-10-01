@@ -4,10 +4,11 @@ import LeafForm from "@/components/form/LeafForm";
 import LeafInput from "@/components/form/LeafInput";
 import Loading from "@/components/shared/Loading";
 import { Button } from "@/components/ui/button";
+import { useUser } from "@/context/UserProvider";
 import { useUserLogin } from "@/hooks/auth.hook";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import React from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import React, { useEffect } from "react";
 import { FieldValues, SubmitHandler } from "react-hook-form";
 
 const defaultValue = {
@@ -17,16 +18,30 @@ const defaultValue = {
 
 const LoginPage = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const { setIsLoading: userLoginLoading } = useUser();
   const { mutate: handleUserLogin, isSuccess, isPending } = useUserLogin();
+
+  const redirect = searchParams.get("redirect");
+
   const handleLoginForm: SubmitHandler<FieldValues> = (data) => {
     console.log(data);
 
     handleUserLogin(data);
+    userLoginLoading(true);
   };
 
-  if (isSuccess) {
-    router.push("/");
-  }
+  // REDIRECT THE USER  AFTER LOGIN
+
+  useEffect(() => {
+    if (!isPending && isSuccess) {
+      if (redirect) {
+        router.push(redirect);
+      } else {
+        router.push("/");
+      }
+    }
+  }, [isPending, isSuccess, redirect, router]);
   return (
     <>
       {isPending && <Loading />}
