@@ -12,7 +12,7 @@ export function ThemeProvider({ children, ...props }: ThemeProviderProps) {
   return (
     <QueryClientProvider client={queryClient}>
       <Toaster />
-      <NextThemesProvider {...props}>{children}</NextThemesProvider>;
+      <NextThemesProvider {...props}>{children}</NextThemesProvider>
     </QueryClientProvider>
   );
 }

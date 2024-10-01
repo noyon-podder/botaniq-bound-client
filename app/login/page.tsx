@@ -2,6 +2,7 @@
 
 import LeafForm from "@/components/form/LeafForm";
 import LeafInput from "@/components/form/LeafInput";
+import Loading from "@/components/shared/Loading";
 import { Button } from "@/components/ui/button";
 import { useUserLogin } from "@/hooks/auth.hook";
 import Link from "next/link";
@@ -9,9 +10,14 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import { FieldValues, SubmitHandler } from "react-hook-form";
 
+const defaultValue = {
+  email: "sonchita@gmail.com",
+  password: "12345678",
+};
+
 const LoginPage = () => {
   const router = useRouter();
-  const { mutate: handleUserLogin, isSuccess } = useUserLogin();
+  const { mutate: handleUserLogin, isSuccess, isPending } = useUserLogin();
   const handleLoginForm: SubmitHandler<FieldValues> = (data) => {
     console.log(data);
 
@@ -23,6 +29,7 @@ const LoginPage = () => {
   }
   return (
     <>
+      {isPending && <Loading />}
       <div className="flex items-center justify-center h-screen">
         <div className="w-full flex items-center justify-center p-5">
           <div className="max-w-[500px] w-full py-10 px-6 border bg-accent  rounded-md">
@@ -34,7 +41,7 @@ const LoginPage = () => {
                 Provide your Email & Password{" "}
               </p>
             </div>
-            <LeafForm onSubmit={handleLoginForm}>
+            <LeafForm onSubmit={handleLoginForm} defaultValues={defaultValue}>
               <LeafInput
                 type="text"
                 name="email"
