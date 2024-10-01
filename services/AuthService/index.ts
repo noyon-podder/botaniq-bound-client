@@ -2,6 +2,7 @@
 "use server";
 
 import axiosInstance from "@/lib/AxiosInstance";
+import { TResetPassword } from "@/types";
 import { jwtDecode } from "jwt-decode";
 import { cookies } from "next/headers";
 import { FieldValues } from "react-hook-form";
@@ -19,14 +20,12 @@ export const registerUser = async (userData: FieldValues) => {
   } catch (error: any) {
     console.error("Axios Error", error);
 
-    // If error response exists, extract error message
     if (error.response) {
       const errorMessage =
         error.response.data?.message || "Failed to register.";
       return { error: errorMessage };
     }
 
-    // For any other errors, return generic message
     return { error: error.message || "An unknown error occurred." };
   }
 };
@@ -73,7 +72,66 @@ export const getCurrentUser = async () => {
     };
   }
 
-  // console.log(object);
-
   return decodedToken;
+};
+
+//  FORGOT PASSWORD HANDLE API CALLING
+export const forgotPassword = async (email: string) => {
+  try {
+    const { data } = await axiosInstance.post("/auth/forget-password", email);
+
+    return data;
+  } catch (error: any) {
+    console.error("Axios Error", error);
+
+    // If error response exists, extract error message
+    if (error.response) {
+      const errorMessage =
+        error.response.data?.message || "Failed to Find user.";
+      return { error: errorMessage };
+    }
+
+    // For any other errors, return generic message
+    return { error: error.message || "An unknown error occurred." };
+  }
+};
+
+//  RESET PASSWORD HANDLE API CALLING
+export const resetPassword = async (payload: TResetPassword) => {
+  const { email, newPassword, token } = payload;
+
+  console.log("Payload: ", payload);
+
+  const resetPasswordData = {
+    email,
+    newPassword,
+  };
+  try {
+    const { data } = await axiosInstance.post(
+      "/auth/reset-password", // Make sure this is the correct endpoint
+      resetPasswordData, // Payload containing email and newPassword
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `${token}`, // Ensure token is passed correctly
+        },
+      }
+    );
+
+    console.log("Reset Password: ", data);
+
+    return data;
+  } catch (error: any) {
+    console.error("Axios Error", error);
+
+    // If error response exists, extract error message
+    if (error.response) {
+      const errorMessage =
+        error.response.data?.message || "Failed to Change Password.";
+      return { error: errorMessage };
+    }
+
+    // For any other errors, return generic message
+    return { error: error.message || "An unknown error occurred." };
+  }
 };
