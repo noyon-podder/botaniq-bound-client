@@ -11,11 +11,13 @@ import { toast } from "@/hooks/use-toast";
 import { protectedRoutes } from "@/constant";
 import { usePathname, useRouter } from "next/navigation";
 import { getInitials } from "@/utils/getInitials";
+import { useUserInformation } from "@/context/UserInfoProvider";
 
 const AvatarDropDown = () => {
   const { user, setIsLoading: userLoading } = useUser();
   const pathname = usePathname();
   const router = useRouter();
+  const { user: userInfo } = useUserInformation();
 
   const handleLogout = () => {
     logout();
@@ -32,7 +34,11 @@ const AvatarDropDown = () => {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Avatar className="cursor-pointer">
-          <AvatarImage src={""} className="" alt="User Profile" />
+          <AvatarImage
+            src={userInfo?.profilePicture}
+            className=""
+            alt="User Profile"
+          />
           <AvatarFallback>
             {getInitials(user?.name as string) || "U"}
           </AvatarFallback>

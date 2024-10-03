@@ -9,10 +9,14 @@ import { useState } from "react";
 import MenuSidebarToggle from "../custom/MenuSidebarToggle";
 import { useUser } from "@/context/UserProvider";
 import AvatarDropDown from "../custom/AvatarDropDown";
+import { useUserInformation } from "@/context/UserInfoProvider";
 
 const Navbar = () => {
   const [searchShow, setSearchShow] = useState(false);
   const { user } = useUser();
+  const { user: userInfo } = useUserInformation();
+
+  console.log("user Information: ", userInfo);
 
   return (
     <div className="bg-accent lg:h-[80px] py-4 lg:px-10 px-5 fixed top-0 w-full">

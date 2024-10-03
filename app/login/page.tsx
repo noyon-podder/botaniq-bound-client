@@ -12,8 +12,8 @@ import React, { useEffect } from "react";
 import { FieldValues, SubmitHandler } from "react-hook-form";
 
 const defaultValue = {
-  email: "sonchita@gmail.com",
-  password: "12345678",
+  email: "nobosree@gmail.com",
+  password: "123456",
 };
 
 const LoginPage = () => {

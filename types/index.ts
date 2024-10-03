@@ -11,17 +11,21 @@ export interface TJwtUser {
 export type TUser = {
   _id: string;
   email: string;
+  password?: string;
+  profilePicture?: string;
+  coverPhoto?: string;
   name: string;
-  role: "USER" | "ADMIN";
-  status: "ACTIVE" | "INACTIVE";
-  password?: string; // Optional
-  followers?: string[]; // Optional
-  following?: string[]; // Optional
-  verified?: boolean; // Optional
-  upvotesReceived?: number; // Optional
-  posts?: string[]; // Optional
-  favorites?: string[]; // Optional
-  isDeleted?: boolean; // Optional
+  bio?: string;
+  followers?: string[];
+  following?: string[];
+  passwordChangedAt?: Date;
+  verified?: boolean;
+  upvotesReceived?: number;
+  posts?: string[];
+  favorites?: string;
+  role?: "ADMIN" | "USER";
+  status?: "ACTIVE" | "BLOCKED";
+  isDeleted?: boolean;
 };
 
 export interface TResetPassword {

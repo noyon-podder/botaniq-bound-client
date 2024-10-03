@@ -39,6 +39,7 @@ export const loginUser = async (userData: FieldValues) => {
       cookies().set("accessToken", data?.data?.accessToken);
       cookies().set("refreshToken", data?.data?.refreshToken);
     }
+
     return data;
   } catch (error: any) {
     console.error("Axios Error", error);
@@ -53,7 +54,6 @@ export const loginUser = async (userData: FieldValues) => {
     return { error: error.message || "An unknown error occurred." };
   }
 };
-
 // GET CURRENT USER
 export const getCurrentUser = async () => {
   const accessToken = cookies().get("accessToken")?.value;
@@ -84,14 +84,12 @@ export const forgotPassword = async (email: string) => {
   } catch (error: any) {
     console.error("Axios Error", error);
 
-    // If error response exists, extract error message
     if (error.response) {
       const errorMessage =
         error.response.data?.message || "Failed to Find user.";
       return { error: errorMessage };
     }
 
-    // For any other errors, return generic message
     return { error: error.message || "An unknown error occurred." };
   }
 };
@@ -136,6 +134,35 @@ export const resetPassword = async (payload: TResetPassword) => {
   }
 };
 
+// GET NEW ACCESS TOKEN
+export const getNewAccessToken = async () => {
+  try {
+    const refreshToken = cookies().get("refreshToken")?.value;
+
+    console.log("refresh token : ", refreshToken);
+
+    const res = await axiosInstance({
+      url: "/auth/refresh-token",
+      method: "POST",
+      withCredentials: true,
+      headers: {
+        cookie: `refreshToken=${refreshToken}`,
+      },
+    });
+
+    return res.data;
+  } catch (error: any) {
+    console.error("Axios Error", error);
+
+    if (error.response) {
+      const errorMessage =
+        error.response.data?.message || "Failed to refresh token.";
+      return { error: errorMessage };
+    }
+
+    return { error: error.message || "An unknown error occurred." };
+  }
+};
 //LOGOUT USER
 export const logout = () => {
   cookies().delete("accessToken");
