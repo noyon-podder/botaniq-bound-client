@@ -8,28 +8,11 @@ import { ThemeToggle } from "./ThemeToggle";
 import { useState } from "react";
 import MenuSidebarToggle from "../custom/MenuSidebarToggle";
 import { useUser } from "@/context/UserProvider";
-import { logout } from "@/services/AuthService";
-import { protectedRoutes } from "@/constant";
-import { usePathname, useRouter } from "next/navigation";
-import { toast } from "@/hooks/use-toast";
+import AvatarDropDown from "../custom/AvatarDropDown";
 
 const Navbar = () => {
   const [searchShow, setSearchShow] = useState(false);
-  const { user, setIsLoading: userLoading } = useUser();
-  const pathname = usePathname();
-  const router = useRouter();
-
-  const handleLogout = () => {
-    logout();
-    userLoading(true);
-
-    toast({
-      title: "Logged out successfully",
-    });
-    if (protectedRoutes.some((route) => pathname.match(route))) {
-      router.push("/");
-    }
-  };
+  const { user } = useUser();
 
   return (
     <div className="bg-accent lg:h-[80px] py-4 lg:px-10 px-5 fixed top-0 w-full">
@@ -42,8 +25,8 @@ const Navbar = () => {
         </div>
 
         <div className=" justify-center flex">
-          <div className="lg:flex gap-16 items-center hidden ">
-            <div className="relative w-[600px]">
+          <div className="lg:flex xl:gap-16 lg:gap-10 items-center hidden ">
+            <div className="relative xl:w-[600px] lg:w-[450px]">
               <Input placeholder="Search" className="pl-10 " />
               <Search className="absolute top-1/2 left-[6px] -translate-y-1/2 text-gray-500 " />
             </div>
@@ -63,14 +46,15 @@ const Navbar = () => {
               <Button>Login</Button>
             </Link>
           ) : (
-            <Button
-              onClick={() => handleLogout()}
-              className=""
-              variant={"outline"}
-              size="sm"
-            >
-              Logout
-            </Button>
+            // <Button
+            //   onClick={() => handleLogout()}
+            //   className=""
+            //   variant={"outline"}
+            //   size="sm"
+            // >
+            //   Logout
+            // </Button>
+            <AvatarDropDown />
           )}
           <ThemeToggle />
         </div>

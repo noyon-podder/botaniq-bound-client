@@ -10,16 +10,14 @@ export function ThemeToggle() {
   const { setTheme, theme } = useTheme();
   const [toggle, setToggle] = React.useState(false);
 
-  console.log(theme);
-
   return (
     <>
       {toggle ? (
         <Button
           variant={"outline"}
           onClick={() => {
-            setToggle(!toggle);
             setTheme("light");
+            setToggle(!toggle);
           }}
         >
           <Sun className="h-[1.2rem] w-[1.2rem] " />
@@ -28,8 +26,8 @@ export function ThemeToggle() {
         <Button
           variant={"outline"}
           onClick={() => {
-            setToggle(!toggle);
             setTheme("dark");
+            setToggle(!toggle);
           }}
         >
           <Moon className="h-[1.2rem] w-[1.2rem] " />

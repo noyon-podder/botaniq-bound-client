@@ -4,16 +4,20 @@ import LeafForm from "@/components/form/LeafForm";
 import LeafInput from "@/components/form/LeafInput";
 import { Button } from "@/components/ui/button";
 import { useRegistration } from "@/hooks/auth.hook";
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import registerValidationSchema from "@/schemas/register.schema";
-
 import Link from "next/link";
 import React, { useEffect } from "react";
 import { FieldValues, SubmitHandler } from "react-hook-form";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import Loading from "@/components/shared/Loading";
+import { useUser } from "@/context/UserProvider";
 
 const RegisterPage = () => {
+  const { setIsLoading: userRegisterLoading } = useUser();
+  const searchParams = useSearchParams();
+  const redirect = searchParams.get("redirect");
+
   const {
     mutate: handleUserRegistration,
     isPending,
@@ -29,20 +33,22 @@ const RegisterPage = () => {
     };
     console.log("userData", userData);
     handleUserRegistration(userData);
+    userRegisterLoading(true);
   };
 
   useEffect(() => {
     if (!isPending && isSuccess) {
-      // if (redirect) {
-      //   router.push(redirect);
-      // } else {
-      router.push("/");
-      // }
+      if (redirect) {
+        router.push(redirect);
+      } else {
+        router.push("/");
+      }
     }
-  }, [isSuccess, isPending, router]);
+  }, [isSuccess, isPending, router, redirect]);
 
   return (
     <>
+      {isPending && <Loading />}
       <div className="flex items-center justify-center h-screen">
         <div className="w-full flex items-center justify-center p-5">
           <div className="max-w-[500px] w-full py-10 px-6 border bg-accent  rounded-md">
