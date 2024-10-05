@@ -4,6 +4,7 @@ import LeafForm from "@/components/form/LeafForm";
 import LeafInput from "@/components/form/LeafInput";
 import Loading from "@/components/shared/Loading";
 import { Button } from "@/components/ui/button";
+import { useUserInformation } from "@/context/UserInfoProvider";
 import { useUser } from "@/context/UserProvider";
 import { useUserLogin } from "@/hooks/auth.hook";
 import Link from "next/link";
@@ -20,6 +21,7 @@ const LoginPage = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { setIsLoading: userLoginLoading } = useUser();
+  const { setIsLoading: userInfoLoading } = useUserInformation();
   const { mutate: handleUserLogin, isSuccess, isPending } = useUserLogin();
 
   const redirect = searchParams.get("redirect");
@@ -28,6 +30,7 @@ const LoginPage = () => {
     console.log(data);
 
     handleUserLogin(data);
+    userInfoLoading(true);
     userLoginLoading(true);
   };
 

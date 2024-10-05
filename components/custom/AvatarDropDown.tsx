@@ -48,7 +48,7 @@ const AvatarDropDown = () => {
         <ul className="">
           <li className="">
             <Link
-              href="/profile"
+              href={`/profile/${user?._id}`}
               className="px-5 py-[10px] border-b border-border text-base font-normal hover:bg-primary hover:text-white  block "
             >
               Profile

@@ -27,19 +27,20 @@ const UserInfoProvider = ({ children }: { children: ReactNode }) => {
 
   const { user } = useUser();
 
-  const { data } = useGetSingleUser(user?.email as string);
+  // Fetch the user data using the user's email
+  const { data, isFetching } = useGetSingleUser(user?._id as string);
 
   useEffect(() => {
-    if (data?.data) {
+    if (data?.data && !isFetching) {
       setUserInfo(data.data);
       setIsLoading(false);
     }
-  }, [data?.data]);
+  }, [data?.data, isFetching]);
 
   return (
     <UserContext.Provider
       value={{
-        user: userInfo, // Fix the key here
+        user: userInfo,
         setUser: setUserInfo,
         isLoading,
         setIsLoading,

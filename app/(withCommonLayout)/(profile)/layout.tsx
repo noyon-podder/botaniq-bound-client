@@ -5,7 +5,7 @@ const ProfileLayout = ({ children }: { children: ReactNode }) => {
   return (
     <div>
       <Navbar />
-      <div className="lg:mt-[100px] mt-[80px]">{children}</div>
+      <div className="lg:mt-[90px] mt-[80px]">{children}</div>
     </div>
   );
 };

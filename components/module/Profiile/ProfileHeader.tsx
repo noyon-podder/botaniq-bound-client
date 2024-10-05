@@ -1,31 +1,32 @@
 "use client";
 
-import Container from "@/components/shared/Container";
 import Loading from "@/components/shared/Loading";
-
-import { useUserInformation } from "@/context/UserInfoProvider";
-
+import { Button } from "@/components/ui/button";
+import { useUser } from "@/context/UserProvider";
 import {
   useCoverPhotoUpload,
   useProfilePictureUpload,
 } from "@/hooks/user.hook";
+import { TUser } from "@/types";
 import { CameraIcon, VerifiedIcon } from "lucide-react";
 import Image from "next/image";
 import { ChangeEvent, useState } from "react";
 
-const ProfilePage = () => {
-  const { user: userInfo, isLoading } = useUserInformation();
-  // const { user } = useUser();
-  // const { data: userData, isLoading } = useGetSingleUser(user?.email as string);
+interface IProps {
+  userInfo: TUser;
+  paramsId: string;
+}
+
+const ProfileHeader = ({ userInfo, paramsId }: IProps) => {
+  const { user: currentUser } = useUser();
   const { mutate: handleCoverUpload, isPending } = useCoverPhotoUpload();
   const { mutate: handleProfilePhotoUpload, isPending: profilePhotoPending } =
     useProfilePictureUpload();
-  // const userInfo = userData?.data;
   const [coverImagePreview, setCoverImagePreview] = useState<string | null>(
     null
   );
 
-  if (isLoading) return <Loading />;
+  //   if (isLoading) return <Loading />;
 
   // handle cover image
   const handleCoverPhotoChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -55,26 +56,26 @@ const ProfilePage = () => {
       reader.readAsDataURL(file);
     }
   };
-
   return (
-    <Container>
-      <div className="relative w-full lg:h-[400px] h-[200px]">
-        {/* Cover Photo */}
-        <div className="group  relative border h-full">
-          {isPending && <Loading />}
-          {userInfo?.coverPhoto && (
-            <Image
-              src={coverImagePreview || userInfo?.coverPhoto}
-              alt="Cover Photo"
-              width={1280}
-              height={600}
-              className="w-full h-full object-cover"
-            />
-          )}
+    <div className="relative w-full lg:h-[300px] h-[200px]">
+      {/* Cover Photo */}
+      <div className="group  relative border h-full">
+        {isPending && <Loading />}
+        {userInfo?.coverPhoto && (
+          <Image
+            src={coverImagePreview || userInfo?.coverPhoto}
+            alt="Cover Photo"
+            width={1280}
+            height={600}
+            className="w-full h-full object-cover"
+          />
+        )}
 
-          {!coverImagePreview && !userInfo?.coverPhoto && (
+        {currentUser?._id === paramsId &&
+          !coverImagePreview &&
+          !userInfo?.coverPhoto && (
             <div>
-              <div className="lg:h-[400px] h-[200px] flex items-center justify-center w-full flex-col gap-4">
+              <div className="lg:h-[300px] h-[200px] flex items-center justify-center w-full flex-col gap-4">
                 <h2 className="text-lg capitalize">Upload Cover Photo</h2>
                 <label
                   htmlFor="cover"
@@ -93,9 +94,11 @@ const ProfilePage = () => {
             </div>
           )}
 
-          {/* Cover Photo Upload Icon (Visible only on hover) */}
-          {userInfo?.coverPhoto && !coverImagePreview && (
-            <div className="absolute bottom-5 right-5  ease-in-out duration-300">
+        {/* Cover Photo Upload Icon (Visible only on hover) */}
+        {userInfo?.coverPhoto &&
+          !coverImagePreview &&
+          currentUser?._id === paramsId && (
+            <div className="absolute bottom-5 right-5  ease-in-out duration-300 z-50">
               <label
                 htmlFor="coverPhoto"
                 className="px-2 cursor-pointer py-1 bg-primary text-white rounded-sm flex items-center gap-2"
@@ -112,25 +115,28 @@ const ProfilePage = () => {
               </label>
             </div>
           )}
-        </div>
+      </div>
 
-        {/* Profile Picture */}
-        <div className=" absolute lg:left-[40px] lg:-bottom-[100px] -bottom-[110px]">
-          {profilePhotoPending && <Loading />}
+      {/* Profile Picture */}
+      <div className=" absolute lg:left-[40px] lg:translate-x-0 md:-bottom-[100px] -bottom-[150px] left-0 flex items-center   w-full justify-between">
+        {profilePhotoPending && <Loading />}
 
-          <div className="flex items-center gap-6">
-            <div className="group lg:size-[150px] size-[140px] relative">
+        <div className="flex items-center flex-col md:flex-row  gap-6">
+          <div className="group lg:size-[150px] size-[140px] relative">
+            {currentUser?._id === paramsId && (
               <div className="lg:size-[150px] size-[140px] absolute rounded-full inset-0 bg-transparent group-hover:bg-black/50"></div>
-              <Image
-                src={
-                  userInfo?.profilePicture ||
-                  "https://cdn-icons-png.flaticon.com/512/149/149071.png"
-                }
-                alt="Profile Photo"
-                width={400}
-                height={400}
-                className="w-full h-full rounded-full"
-              />
+            )}
+            <Image
+              src={
+                userInfo?.profilePicture ||
+                "https://cdn-icons-png.flaticon.com/512/149/149071.png"
+              }
+              alt="Profile Photo"
+              width={400}
+              height={400}
+              className="w-full h-full rounded-full"
+            />
+            {currentUser?._id === paramsId && (
               <div className="size-[50px] rounded-full opacity-0 group-hover:opacity-100 ease-in duration-300 bg-primary text-white absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center cursor-pointer">
                 <label htmlFor="profilePhoto">
                   <input
@@ -143,29 +149,36 @@ const ProfilePage = () => {
                   <CameraIcon size={30} className="cursor-pointer" />
                 </label>
               </div>
-            </div>
-            {/* profile name */}
-            <div className="lg:mt-20">
-              <h2 className="capitalize text-[20px] lg:text-[26px] font-bold text-foreground flex items-center gap-2">
-                {userInfo?.name}
-                {!userInfo?.verified && (
-                  <VerifiedIcon className="text-primary" size={18} />
-                )}
-              </h2>
-              {/* following and followers */}
-              <div>
-                <p className="text-[16px] text-foreground">
-                  {userInfo?.followers?.length} Followers{" "}
-                  <b className="mx-1">.</b>
-                  {userInfo?.following?.length} Followers
-                </p>
-              </div>
+            )}
+          </div>
+          {/* profile name */}
+          <div className="lg:mt-20">
+            <h2 className="capitalize text-[20px] lg:text-[26px] font-bold text-foreground flex items-center gap-2">
+              {userInfo?.name}
+              {!userInfo?.verified && (
+                <VerifiedIcon className="text-primary" size={18} />
+              )}
+            </h2>
+            {/* following and followers */}
+            <div>
+              <p className="text-[16px] text-foreground">
+                {userInfo?.followers?.length} Followers{" "}
+                <b className="mx-1">.</b>
+                {userInfo?.following?.length} Followers
+              </p>
             </div>
           </div>
         </div>
+
+        {/* FOllow button */}
+        {currentUser?._id !== paramsId && (
+          <div className="flex justify-end mt-10 lg:mr-10">
+            <Button>Follow</Button>
+          </div>
+        )}
       </div>
-    </Container>
+    </div>
   );
 };
 
-export default ProfilePage;
+export default ProfileHeader;
