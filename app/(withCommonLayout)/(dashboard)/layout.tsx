@@ -1,10 +1,11 @@
+import Sidebar from "@/components/module/Dashboard/Sidebar";
 import React, { ReactNode } from "react";
 
 const DashboardLayout = ({ children }: { children: ReactNode }) => {
   return (
     <div className="flex">
-      <div className="bg-pink-800 w-[400px]">SIdebar</div>
-      <div>{children}</div>
+      <Sidebar />
+      <div className="lg:ml-[300px] w-full">{children}</div>
     </div>
   );
 };

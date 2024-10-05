@@ -35,7 +35,9 @@ const Navbar = () => {
               <Search className="absolute top-1/2 left-[6px] -translate-y-1/2 text-gray-500 " />
             </div>
 
-            <Button>Write Post</Button>
+            <Link href="/user-dashboard/create-post">
+              <Button>Write Post</Button>
+            </Link>
           </div>
         </div>
 

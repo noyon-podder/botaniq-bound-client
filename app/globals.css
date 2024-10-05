@@ -76,3 +76,11 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+.custom-quill .ql-container {
+  height: 300px;
+}
+
+.custom-quill .ql-editor {
+  min-height: 250px;
+}
