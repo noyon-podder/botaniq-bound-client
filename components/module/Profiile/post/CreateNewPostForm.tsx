@@ -66,7 +66,7 @@ const CreateNewPostForm = () => {
   return (
     <div>
       {isPending && <Loading />}
-      <div className="mt-10 px-20">
+      <div className="mt-10 lg:px-20 px-10">
         <LeafForm onSubmit={onSubmit}>
           <div>
             <LeafInput type="text" label="Title" name="title" />

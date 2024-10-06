@@ -118,9 +118,8 @@ const ProfileHeader = ({ userInfo, paramsId }: IProps) => {
       </div>
 
       {/* Profile Picture */}
+      {profilePhotoPending && <Loading />}
       <div className=" absolute lg:left-[40px] lg:translate-x-0 md:-bottom-[100px] -bottom-[150px] left-0 flex items-center   w-full justify-between">
-        {profilePhotoPending && <Loading />}
-
         <div className="flex items-center flex-col md:flex-row  gap-6">
           <div className="group lg:size-[150px] size-[140px] relative">
             {currentUser?._id === paramsId && (

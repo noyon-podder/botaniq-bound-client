@@ -27,3 +27,22 @@ export const createPost = async (postData: FormData) => {
     return { error: error.message || "An unknown error occurred." };
   }
 };
+
+// Upvote POst
+export const upvotePost = async (id: string) => {
+  try {
+    const { data } = await axiosInstance.post(`/post/${id}/upvote`);
+
+    return data;
+  } catch (error: any) {
+    console.error("Axios Error", error);
+
+    if (error.response) {
+      const errorMessage =
+        error.response.data?.message || "Failed to create upvotes.";
+      return { error: errorMessage };
+    }
+
+    return { error: error.message || "An unknown error occurred." };
+  }
+};

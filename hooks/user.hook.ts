@@ -3,6 +3,7 @@
 
 import {
   coverPhotoUpload,
+  getAllPostsByUserId,
   getSingleUser,
   profilePictureUpload,
 } from "@/services/User";
@@ -17,6 +18,14 @@ export const useGetSingleUser = (email: string) => {
     staleTime: 10000,
     refetchOnWindowFocus: true,
     refetchInterval: 5000,
+  });
+};
+
+// GET ALL POSTS BY USER  ID
+export const useGetAllPostsByUserId = (userId: string) => {
+  return useQuery({
+    queryKey: ["POST"],
+    queryFn: async () => await getAllPostsByUserId(userId),
   });
 };
 

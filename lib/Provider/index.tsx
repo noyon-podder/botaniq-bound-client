@@ -9,7 +9,7 @@ import UserProvider from "@/context/UserProvider";
 import StoreProvider from "../../context/StoreProvider";
 import UserInfoProvider from "@/context/UserInfoProvider";
 
-const queryClient = new QueryClient();
+export const queryClient = new QueryClient();
 
 export function ThemeProvider({ children, ...props }: ThemeProviderProps) {
   return (

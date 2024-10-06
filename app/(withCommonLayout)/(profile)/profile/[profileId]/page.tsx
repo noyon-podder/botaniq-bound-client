@@ -1,3 +1,5 @@
+import Post from "@/components/module/Profiile/post/Post";
+import PostData from "@/components/module/Profiile/PostData";
 import ProfileHeader from "@/components/module/Profiile/ProfileHeader";
 import Container from "@/components/shared/Container";
 import envConfig from "@/config/envConfig";
@@ -14,19 +16,21 @@ const ProfileDetailsPage = async ({ params }: IProps) => {
     `${envConfig.baseApi}/user/single-user/${params?.profileId}`,
 
     {
-      next: { revalidate: 60 },
+      cache: "no-cache",
       headers: {
         Authorization: `${accessToken}`,
       },
     }
   );
   const userInfo = await res.json();
-  console.log({ id });
 
-  console.log(userInfo);
+  console.log("Post Data", userInfo?.data.posts);
   return (
     <Container>
       <ProfileHeader userInfo={userInfo.data} paramsId={id} />
+      <div className="mt-40">
+        <PostData userId={params.profileId} />
+      </div>
     </Container>
   );
 };

@@ -22,6 +22,25 @@ export const getSingleUser = async (id: string) => {
   }
 };
 
+// GET ALL POSY BY A USER
+export const getAllPostsByUserId = async (id: string) => {
+  try {
+    const { data } = await axiosInstance.get(`/user/${id}`);
+
+    return data;
+  } catch (error: any) {
+    console.error("Axios Error", error);
+
+    if (error.response) {
+      const errorMessage =
+        error.response.data?.message || "Failed to Find User Post";
+      return { error: errorMessage };
+    }
+
+    return { error: error.message || "An unknown error occurred." };
+  }
+};
+
 // COVER PHOTO UPLOAD
 export const coverPhotoUpload = async (image: FormData) => {
   try {

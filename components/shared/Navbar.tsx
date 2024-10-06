@@ -16,10 +16,10 @@ const Navbar = () => {
   const { user } = useUser();
   const { user: userInfo } = useUserInformation();
 
-  console.log("user Information: ", userInfo);
+  // console.log("user Information: ", userInfo);
 
   return (
-    <div className="bg-accent lg:h-[80px] py-4 lg:px-10 px-5 fixed top-0 w-full">
+    <div className="bg-accent lg:h-[80px] py-4 lg:px-10 px-5 fixed top-0 w-full z-[1000] shadow-sm">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-5 ">
           <MenuSidebarToggle />

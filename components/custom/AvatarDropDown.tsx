@@ -39,9 +39,7 @@ const AvatarDropDown = () => {
             className=""
             alt="User Profile"
           />
-          <AvatarFallback>
-            {getInitials(user?.name as string) || "U"}
-          </AvatarFallback>
+          <AvatarFallback>{getInitials(user?.name as string)}</AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-48 bg-accent dark:bg-background">
