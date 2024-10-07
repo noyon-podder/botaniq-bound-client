@@ -9,15 +9,16 @@ import {
 } from "@/services/User";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useToast } from "./use-toast";
+import { queryClient } from "@/lib/Provider";
 
 // USER GET SINGLE USER
-export const useGetSingleUser = (email: string) => {
+export const useGetSingleUser = (id: string) => {
   return useQuery({
     queryKey: ["SINGLE_USER"],
-    queryFn: async () => await getSingleUser(email),
-    staleTime: 10000,
-    refetchOnWindowFocus: true,
-    refetchInterval: 5000,
+    queryFn: async () => await getSingleUser(id),
+    // staleTime: 10000,
+    // refetchOnWindowFocus: true,
+    // refetchInterval: 5000,
   });
 };
 
@@ -41,6 +42,7 @@ export const useCoverPhotoUpload = () => {
       return response;
     },
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["SINGLE_USER", "POST"] });
       toast({
         title: "Cover Photo Upload Successfully",
       });
@@ -61,13 +63,16 @@ export const useProfilePictureUpload = () => {
   const { toast } = useToast();
 
   return useMutation({
-    mutationKey: ["COVER_UPLOAD"],
+    mutationKey: ["PROFILE"],
     mutationFn: async (image: FormData) => {
       const response = await profilePictureUpload(image);
       if (response.error) throw new Error(response.error);
       return response;
     },
     onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["SINGLE_USER", "POST"],
+      });
       toast({
         title: "Profile Picture Upload Successfully",
       });

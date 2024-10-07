@@ -91,7 +91,7 @@ const Post = ({ post }: { post: IPost }) => {
       </div>
       <div className="pt-5 flex items-center justify-between">
         <div
-          className="flex items-center gap-2 px-4 bg-transparent hover:bg-gray-200 cursor-pointer rounded-md py-2"
+          className="flex items-center gap-2 px-4 bg-transparent hover:bg-gray-200 dark:hover:bg-gray-800 cursor-pointer rounded-md py-2"
           onClick={handleUpvoteFunction}
         >
           <ThumbsUp
@@ -106,7 +106,7 @@ const Post = ({ post }: { post: IPost }) => {
           Like
         </div>
         <div
-          className="flex items-center gap-2 px-4 bg-transparent hover:bg-gray-200 cursor-pointer rounded-md py-2"
+          className="flex items-center gap-2 px-4 bg-transparent hover:bg-gray-200 dark:hover:bg-gray-800 cursor-pointer rounded-md py-2"
           onClick={handleDownvoteFunction}
         >
           <ThumbsDown
@@ -120,11 +120,11 @@ const Post = ({ post }: { post: IPost }) => {
           />
           Dislike
         </div>
-        <div className="flex items-center gap-2 px-4 bg-transparent hover:bg-gray-200 cursor-pointer rounded-md py-2">
+        <div className="flex items-center gap-2 px-4 bg-transparent hover:bg-gray-200 dark:hover:bg-gray-800 cursor-pointer rounded-md py-2">
           <MessageSquare className="text-gray-400" />
           Comment
         </div>
-        <div className="flex items-center gap-2 px-4 bg-transparent hover:bg-gray-200 cursor-pointer rounded-md py-2">
+        <div className="flex items-center gap-2 px-4 bg-transparent hover:bg-gray-200 dark:hover:bg-gray-800 cursor-pointer rounded-md py-2">
           <Copy className="text-gray-400" />
           Copy
         </div>

@@ -1,6 +1,3 @@
-"use server";
-
-import Post from "@/components/module/Profiile/post/Post";
 import PostData from "@/components/module/Profiile/PostData";
 import ProfileHeader from "@/components/module/Profiile/ProfileHeader";
 import Container from "@/components/shared/Container";
