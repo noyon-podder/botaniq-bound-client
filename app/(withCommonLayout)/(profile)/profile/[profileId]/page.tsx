@@ -1,3 +1,5 @@
+"use server";
+
 import Post from "@/components/module/Profiile/post/Post";
 import PostData from "@/components/module/Profiile/PostData";
 import ProfileHeader from "@/components/module/Profiile/ProfileHeader";
@@ -12,8 +14,12 @@ const ProfileDetailsPage = async ({ params }: IProps) => {
   const id = params?.profileId;
   const accessToken = cookies().get("accessToken")?.value;
 
+  if (!accessToken) {
+    throw new Error("Access token is required");
+  }
+
   const res = await fetch(
-    `${envConfig.baseApi}/user/single-user/${params?.profileId}`,
+    `${envConfig?.baseApi}/user/single-user/${params?.profileId}`,
 
     {
       cache: "no-cache",
@@ -23,6 +29,8 @@ const ProfileDetailsPage = async ({ params }: IProps) => {
     }
   );
   const userInfo = await res.json();
+
+  // const { data: userInfo } = useGetSingleUser(params?.profileId);
 
   console.log("Post Data", userInfo?.data.posts);
   return (

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useMutation } from "@tanstack/react-query";
 import { useToast } from "./use-toast";
-import { createPost, upvotePost } from "@/services/Post";
+import { createPost, downvotePost, upvotePost } from "@/services/Post";
 import { queryClient } from "@/lib/Provider";
 
 // create new post
@@ -44,6 +44,32 @@ export const useUpVotes = () => {
       queryClient.invalidateQueries({ queryKey: ["POST"] });
       toast({
         title: "Upvote Success",
+      });
+    },
+    onError: (error: any) => {
+      console.log("Error Message", error);
+
+      toast({
+        variant: "destructive",
+        title: error.message || "An unknown error occurred.",
+      });
+    },
+  });
+};
+
+export const useDownVotes = () => {
+  const { toast } = useToast();
+  return useMutation({
+    mutationKey: ["UPVOTE"],
+    mutationFn: async (postId: string) => {
+      const response = await downvotePost(postId);
+      if (response.error) throw new Error(response.error);
+      return response;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["POST"] });
+      toast({
+        title: "Action Success",
       });
     },
     onError: (error: any) => {

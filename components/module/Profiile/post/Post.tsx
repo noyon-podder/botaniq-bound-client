@@ -5,13 +5,15 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { getInitials } from "@/utils/getInitials";
 import { AvatarImage } from "@radix-ui/react-avatar";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import ImageGallery from "./ImageGallery";
 import { Copy, MessageSquare, ThumbsDown, ThumbsUp } from "lucide-react";
-import { useUpVotes } from "@/hooks/post.hook";
+import { useDownVotes, useUpVotes } from "@/hooks/post.hook";
 import TruncateText from "@/utils/TruncateText";
+import { IPost } from "@/types";
 
-const Post = ({ post }) => {
+const Post = ({ post }: { post: IPost }) => {
+  console.log({ post });
   const {
     _id: postId,
     author,
@@ -23,19 +25,26 @@ const Post = ({ post }) => {
     comments,
     views,
   } = post;
-  const { name, profilePicture, email, _id } = author;
+  const { name, profilePicture, _id: authorId } = author;
 
   const timeAgo = moment(post.createdAt).fromNow();
   const { mutate: handleUpvote } = useUpVotes();
+  const { mutate: handleDownVote } = useDownVotes();
+  const [upvotesIcon, setUpvotesIcon] = useState(false);
 
   const handleUpvoteFunction = () => {
+    setUpvotesIcon(!upvotesIcon);
     handleUpvote(postId);
+  };
+
+  const handleDownvoteFunction = () => {
+    handleDownVote(postId);
   };
   return (
     <div className="border p-5">
       {/* PROFILE INFO */}
       <div className="flex items-center gap-4">
-        <Link href={`/profile/${_id}`}>
+        <Link href={`/profile/${authorId}`}>
           <Avatar className="cursor-pointer">
             <AvatarImage src={profilePicture} className="" alt="User Profile" />
             <AvatarFallback>{getInitials(name)}</AvatarFallback>
@@ -85,19 +94,38 @@ const Post = ({ post }) => {
           className="flex items-center gap-2 px-4 bg-transparent hover:bg-gray-200 cursor-pointer rounded-md py-2"
           onClick={handleUpvoteFunction}
         >
-          <ThumbsUp />
+          <ThumbsUp
+            className={`${
+              post?.upvotedBy?.includes(authorId)
+                ? "text-blue-600" // Apply this class if the condition matches
+                : "text-gray-400" // Apply this class if the condition doesn't match
+            }`}
+            size={24}
+            fill={post?.upvotedBy?.includes(authorId) ? "#3B82F6" : "none"} // Fill icon if condition matches
+          />
           Like
         </div>
-        <div className="flex items-center gap-2 px-4 bg-transparent hover:bg-gray-200 cursor-pointer rounded-md py-2">
-          <ThumbsDown />
+        <div
+          className="flex items-center gap-2 px-4 bg-transparent hover:bg-gray-200 cursor-pointer rounded-md py-2"
+          onClick={handleDownvoteFunction}
+        >
+          <ThumbsDown
+            className={`${
+              post?.downvotedBy?.includes(authorId)
+                ? "text-blue-600" // Apply this class if the condition matches
+                : "text-gray-400" // Apply this class if the condition doesn't match
+            }`}
+            size={24}
+            fill={post?.downvotedBy?.includes(authorId) ? "#3B82F6" : "none"} // Fill icon if condition matches
+          />
           Dislike
         </div>
         <div className="flex items-center gap-2 px-4 bg-transparent hover:bg-gray-200 cursor-pointer rounded-md py-2">
-          <MessageSquare />
+          <MessageSquare className="text-gray-400" />
           Comment
         </div>
         <div className="flex items-center gap-2 px-4 bg-transparent hover:bg-gray-200 cursor-pointer rounded-md py-2">
-          <Copy />
+          <Copy className="text-gray-400" />
           Copy
         </div>
       </div>

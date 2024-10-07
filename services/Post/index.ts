@@ -46,3 +46,22 @@ export const upvotePost = async (id: string) => {
     return { error: error.message || "An unknown error occurred." };
   }
 };
+
+// DOWNVOTE POst
+export const downvotePost = async (id: string) => {
+  try {
+    const { data } = await axiosInstance.post(`/post/${id}/downvote`);
+
+    return data;
+  } catch (error: any) {
+    console.error("Axios Error", error);
+
+    if (error.response) {
+      const errorMessage =
+        error.response.data?.message || "Failed to create downvote.";
+      return { error: errorMessage };
+    }
+
+    return { error: error.message || "An unknown error occurred." };
+  }
+};
