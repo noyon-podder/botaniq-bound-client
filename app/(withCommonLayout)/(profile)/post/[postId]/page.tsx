@@ -6,9 +6,8 @@ import Container from "@/components/shared/Container";
 import Loading from "@/components/shared/Loading";
 import { useUser } from "@/context/UserProvider";
 import { useCreateComment } from "@/hooks/comment.hook";
-
 import { useGetPostById } from "@/hooks/post.hook";
-import { LoaderIcon, Send } from "lucide-react";
+import { Send } from "lucide-react";
 import { useState } from "react";
 
 const SinglePostPage = ({ params }: { params: { postId: string } }) => {

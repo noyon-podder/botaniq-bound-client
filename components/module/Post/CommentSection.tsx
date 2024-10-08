@@ -2,7 +2,7 @@
 // "use client";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Ellipsis } from "lucide-react";
+
 import CommentDropDownAction from "./CommentDropDownAction";
 
 const CommentSection = ({ comments }: any) => {
