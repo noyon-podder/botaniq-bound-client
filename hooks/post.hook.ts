@@ -1,7 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useToast } from "./use-toast";
-import { createPost, downvotePost, upvotePost } from "@/services/Post";
+import {
+  createPost,
+  downvotePost,
+  getAllPost,
+  upvotePost,
+} from "@/services/Post";
 import { queryClient } from "@/lib/Provider";
 
 // create new post
@@ -31,6 +36,15 @@ export const useCreatePost = () => {
   });
 };
 
+// Get All Post
+export const useGetAllPost = () => {
+  return useQuery({
+    queryKey: ["POST"],
+    queryFn: async () => await getAllPost(),
+  });
+};
+
+// UPVOTE
 export const useUpVotes = () => {
   const { toast } = useToast();
   return useMutation({
@@ -57,6 +71,7 @@ export const useUpVotes = () => {
   });
 };
 
+// DOWNVOTE
 export const useDownVotes = () => {
   const { toast } = useToast();
   return useMutation({

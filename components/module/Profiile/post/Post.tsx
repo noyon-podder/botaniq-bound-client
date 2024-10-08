@@ -11,9 +11,10 @@ import { Copy, MessageSquare, ThumbsDown, ThumbsUp } from "lucide-react";
 import { useDownVotes, useUpVotes } from "@/hooks/post.hook";
 import TruncateText from "@/utils/TruncateText";
 import { IPost } from "@/types";
+import { useUser } from "@/context/UserProvider";
 
 const Post = ({ post }: { post: IPost }) => {
-  console.log({ post });
+  const { user } = useUser();
   const {
     _id: postId,
     author,
@@ -41,7 +42,7 @@ const Post = ({ post }: { post: IPost }) => {
     handleDownVote(postId);
   };
   return (
-    <div className="border p-5">
+    <div className="border p-5 mb-5 bg-white dark:bg-accent">
       {/* PROFILE INFO */}
       <div className="flex items-center gap-4">
         <Link href={`/profile/${authorId}`}>
@@ -96,12 +97,20 @@ const Post = ({ post }: { post: IPost }) => {
         >
           <ThumbsUp
             className={`${
-              post?.upvotedBy?.includes(authorId)
-                ? "text-blue-600" // Apply this class if the condition matches
-                : "text-gray-400" // Apply this class if the condition doesn't match
+              post?.downvotedBy?.find(
+                (id) => id.toString() === user?._id.toString()
+              )
+                ? "text-blue-600" // Apply this class if the user has downvoted
+                : "text-gray-400" // Apply this class if the user has not downvoted
             }`}
             size={24}
-            fill={post?.upvotedBy?.includes(authorId) ? "#3B82F6" : "none"} // Fill icon if condition matches
+            fill={
+              post?.downvotedBy?.find(
+                (id) => id.toString() === user?._id.toString()
+              )
+                ? "#3B82F6" // Fill with blue color if user has downvoted
+                : "none" // No fill if user has not downvoted
+            }
           />
           Like
         </div>
@@ -111,12 +120,20 @@ const Post = ({ post }: { post: IPost }) => {
         >
           <ThumbsDown
             className={`${
-              post?.downvotedBy?.includes(authorId)
-                ? "text-blue-600" // Apply this class if the condition matches
-                : "text-gray-400" // Apply this class if the condition doesn't match
+              post?.downvotedBy?.some(
+                (id) => id.toString() === user?._id.toString()
+              )
+                ? "text-blue-600" // Apply this class if the user has downvoted
+                : "text-gray-400" // Apply this class if the user has not downvoted
             }`}
             size={24}
-            fill={post?.downvotedBy?.includes(authorId) ? "#3B82F6" : "none"} // Fill icon if condition matches
+            fill={
+              post?.downvotedBy?.some(
+                (id) => id.toString() === user?._id.toString()
+              )
+                ? "#3B82F6" // Fill with blue color if user has downvoted
+                : "none" // No fill if user has not downvoted
+            }
           />
           Dislike
         </div>

@@ -42,7 +42,7 @@ const AvatarDropDown = () => {
           <AvatarFallback>{getInitials(user?.name as string)}</AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-48 bg-accent dark:bg-background">
+      <DropdownMenuContent className="w-48 bg-accent dark:bg-background z-[1000] relative">
         <ul className="">
           <li className="">
             <Link

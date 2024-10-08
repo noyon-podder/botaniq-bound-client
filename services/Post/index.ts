@@ -28,6 +28,25 @@ export const createPost = async (postData: FormData) => {
   }
 };
 
+// GET ALL POST FOR ALL USERS
+export const getAllPost = async () => {
+  try {
+    const { data } = await axiosInstance.get(`/post`);
+
+    return data;
+  } catch (error: any) {
+    console.error("Axios Error", error);
+
+    if (error.response) {
+      const errorMessage =
+        error.response.data?.message || "Failed to Retrieve Post";
+      return { error: errorMessage };
+    }
+
+    return { error: error.message || "An unknown error occurred." };
+  }
+};
+
 // Upvote POst
 export const upvotePost = async (id: string) => {
   try {
