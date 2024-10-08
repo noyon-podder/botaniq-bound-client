@@ -1,7 +1,5 @@
 "use client";
-import AllPost from "@/components/module/Newsfeed/AllPost";
 import Post from "@/components/module/Profiile/post/Post";
-import envConfig from "@/config/envConfig";
 import { useGetAllPost } from "@/hooks/post.hook";
 import { IPost } from "@/types";
 import React from "react";
