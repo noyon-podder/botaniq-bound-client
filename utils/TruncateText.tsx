@@ -3,12 +3,11 @@ import { useState } from "react";
 
 interface TruncateTextProps {
   text: string;
-  wordLimit?: number; // Default limit is 100 words
+  wordLimit?: number;
+  postId: string;
 }
 
-const TruncateText = ({ text, wordLimit = 100 }: TruncateTextProps) => {
-  const [isExpanded, setIsExpanded] = useState(false);
-
+const TruncateText = ({ text, wordLimit = 100, postId }: TruncateTextProps) => {
   // Split text into words
   const words = text.trim().split(/\s+/);
 
@@ -18,19 +17,11 @@ const TruncateText = ({ text, wordLimit = 100 }: TruncateTextProps) => {
 
   return (
     <div>
-      {isExpanded || !isTruncated ? (
-        <span>{text}</span>
-      ) : (
-        <span>{truncatedText}...</span>
-      )}
+      {!isTruncated ? <span>{text}</span> : <span>{truncatedText}...</span>}
 
-      {isTruncated && !isExpanded && (
+      {isTruncated && (
         <Link
-          href="#"
-          onClick={(e) => {
-            e.preventDefault();
-            setIsExpanded(true);
-          }}
+          href={`/post/${postId}`}
           className="text-blue-600 underline cursor-pointer"
         >
           See more

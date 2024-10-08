@@ -60,10 +60,10 @@ const Post = ({ post }: { post: IPost }) => {
 
       {/* POST INFO */}
       <div className="my-6">
-        <Link href="/post">
+        <Link href={`/post/${postId}`}>
           <h2 className="text-2xl font-medium">{title}</h2>
         </Link>
-        <TruncateText text={content} wordLimit={10} />
+        <TruncateText text={content} wordLimit={10} postId={postId} />
       </div>
 
       <div>
@@ -97,7 +97,7 @@ const Post = ({ post }: { post: IPost }) => {
         >
           <ThumbsUp
             className={`${
-              post?.downvotedBy?.find(
+              post?.upvotedBy?.find(
                 (id) => id.toString() === user?._id.toString()
               )
                 ? "text-blue-600" // Apply this class if the user has downvoted
@@ -105,7 +105,7 @@ const Post = ({ post }: { post: IPost }) => {
             }`}
             size={24}
             fill={
-              post?.downvotedBy?.find(
+              post?.upvotedBy?.find(
                 (id) => id.toString() === user?._id.toString()
               )
                 ? "#3B82F6" // Fill with blue color if user has downvoted

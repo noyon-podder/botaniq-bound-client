@@ -12,10 +12,10 @@ import { useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect } from "react";
 import { FieldValues, SubmitHandler } from "react-hook-form";
 
-const defaultValue = {
-  email: "nobosree@gmail.com",
-  password: "123456",
-};
+// const defaultValue = {
+//   email: "nobosree@gmail.com",
+//   password: "123456",
+// };
 
 const LoginPage = () => {
   const router = useRouter();
@@ -59,7 +59,7 @@ const LoginPage = () => {
                 Provide your Email & Password{" "}
               </p>
             </div>
-            <LeafForm onSubmit={handleLoginForm} defaultValues={defaultValue}>
+            <LeafForm onSubmit={handleLoginForm}>
               <LeafInput
                 type="text"
                 name="email"

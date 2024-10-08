@@ -1,5 +1,6 @@
 "use client";
 import Post from "@/components/module/Profiile/post/Post";
+import Loading from "@/components/shared/Loading";
 import { useGetAllPost } from "@/hooks/post.hook";
 import { IPost } from "@/types";
 import React from "react";
@@ -12,11 +13,12 @@ const HomePage = () => {
 
   // console.log(data?.data);
 
-  const { data } = useGetAllPost();
+  const { data, isLoading } = useGetAllPost();
   console.log(data);
 
   return (
     <div className="">
+      {isLoading && <Loading />}
       {data?.data.map((item: IPost) => (
         <Post key={item._id} post={item} />
       ))}
