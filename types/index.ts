@@ -77,7 +77,7 @@ export interface IPost {
 }
 
 export interface IComment {
-  authorId: string;
+  authorId: string | undefined;
   content: string;
   postId: string;
 }

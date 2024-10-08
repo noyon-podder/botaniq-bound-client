@@ -14,7 +14,7 @@ export const useGetAllComment = (postId: string) => {
 };
 
 // create new comment
-export const usePostComment = () => {
+export const useCreateComment = () => {
   const { toast } = useToast();
 
   return useMutation({
@@ -25,7 +25,7 @@ export const usePostComment = () => {
       return response;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["COMMENT"] });
+      queryClient.invalidateQueries({ queryKey: ["SINGLE_POST"] });
       toast({
         title: "Comment Post Success",
       });

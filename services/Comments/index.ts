@@ -8,7 +8,7 @@ import { IComment } from "@/types";
 export const createComment = async (commentData: IComment) => {
   const { postId, authorId, content } = commentData;
   try {
-    const { data } = await axiosInstance.post(`/${postId}/add-comment`, {
+    const { data } = await axiosInstance.post(`comment/${postId}/add-comment`, {
       authorId,
       content,
     });

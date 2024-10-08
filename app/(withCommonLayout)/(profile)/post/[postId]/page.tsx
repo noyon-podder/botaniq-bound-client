@@ -4,17 +4,44 @@ import CommentSection from "@/components/module/Post/CommentSection";
 import PostDetails from "@/components/module/Post/PostDetails";
 import Container from "@/components/shared/Container";
 import Loading from "@/components/shared/Loading";
+import { useUser } from "@/context/UserProvider";
+import { useCreateComment } from "@/hooks/comment.hook";
 
 import { useGetPostById } from "@/hooks/post.hook";
-import { Send } from "lucide-react";
+import { LoaderIcon, Send } from "lucide-react";
+import { useState } from "react";
 
 const SinglePostPage = ({ params }: { params: { postId: string } }) => {
+  const { user } = useUser();
   const postId = params.postId;
   const { data, isLoading } = useGetPostById(postId);
+  const { mutate: handleCreateComment } = useCreateComment();
+
+  const [comment, setComment] = useState("");
 
   const postData = data?.data;
 
-  console.log(postData);
+  const handleCommentSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    console.log(comment);
+
+    const commentData = {
+      authorId: user?._id,
+      postId: postId,
+      content: comment,
+    };
+
+    handleCreateComment(commentData);
+
+    setComment("");
+  };
+
+  console.log(data?.data);
+
+  // if (isSuccess) {
+  //   setComment("");
+  // }
 
   return (
     <Container>
@@ -22,25 +49,35 @@ const SinglePostPage = ({ params }: { params: { postId: string } }) => {
       <PostDetails postData={postData} />
 
       <div className="py-5 border-t">
-        <div className="lg:px-10 px-5 flex gap-5">
+        <form onSubmit={handleCommentSubmit} className="flex gap-5 mb-5">
           <textarea
-            name=""
+            name="comment"
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
             id=""
             placeholder="Enter your comment"
-            className="w-full px-5 py-6 outline-none focus:border-primary"
+            className="w-full px-5 py-6 outline-none focus:border-primary resize-none"
           ></textarea>
-          <button className="flex items-center gap-2 px-3 py-1 bg-primary text-white h-10 ">
+          <button
+            className="flex items-center gap-2 px-3 py-1 bg-primary text-white h-10 rounded-md justify-center hover:bg-green-600"
+            type="submit"
+          >
             Send
             <Send size={16} />
           </button>
-        </div>
+        </form>
         <h2 className="font-medium capitalize">
           Comments <span>{postData?.comments?.length}</span>
         </h2>
 
-        <div>
-          <CommentSection comments={postData?.comments} />
-        </div>
+        {postData?.comments?.length === 0 ? (
+          <p className="text-center">No comments yet</p>
+        ) : (
+          <div>
+            {/* here the all comment section */}
+            <CommentSection comments={postData?.comments} />
+          </div>
+        )}
       </div>
     </Container>
   );
