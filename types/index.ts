@@ -75,3 +75,9 @@ export interface IPost {
   downvotedBy: any[];
   upvotedBy: any[];
 }
+
+export interface IComment {
+  authorId: string;
+  content: string;
+  postId: string;
+}

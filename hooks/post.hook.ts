@@ -5,6 +5,7 @@ import {
   createPost,
   downvotePost,
   getAllPost,
+  getPostById,
   upvotePost,
 } from "@/services/Post";
 import { queryClient } from "@/lib/Provider";
@@ -41,6 +42,14 @@ export const useGetAllPost = () => {
   return useQuery({
     queryKey: ["POST"],
     queryFn: async () => await getAllPost(),
+  });
+};
+
+// GET POST BY ID
+export const useGetPostById = (postId: string) => {
+  return useQuery({
+    queryKey: ["SINGLE_POST"],
+    queryFn: async () => await getPostById(postId),
   });
 };
 

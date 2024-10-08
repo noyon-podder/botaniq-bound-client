@@ -47,6 +47,25 @@ export const getAllPost = async () => {
   }
 };
 
+//  GET POST BY ID
+export const getPostById = async (postId: string) => {
+  try {
+    const { data } = await axiosInstance.get(`/post/${postId}`);
+
+    return data;
+  } catch (error: any) {
+    console.error("Axios Error", error);
+
+    if (error.response) {
+      const errorMessage =
+        error.response.data?.message || "Failed to Retrieve Post";
+      return { error: errorMessage };
+    }
+
+    return { error: error.message || "An unknown error occurred." };
+  }
+};
+
 // Upvote POst
 export const upvotePost = async (id: string) => {
   try {
