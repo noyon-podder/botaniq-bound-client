@@ -1,11 +1,8 @@
 // "use client";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { useGetAllComment } from "@/hooks/comment.hook";
 
 const CommentSection = ({ comments }: any) => {
-  // const { data } = useGetAllComment(postId);
-
   return (
     <div>
       <div className="mt-10">
