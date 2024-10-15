@@ -9,12 +9,11 @@ import React, { useState } from "react";
 import ImageGallery from "./ImageGallery";
 import { Copy, MessageSquare, ThumbsDown, ThumbsUp } from "lucide-react";
 import { useDownVotes, useUpVotes } from "@/hooks/post.hook";
-import TruncateText from "@/utils/TruncateText";
 import { IPost } from "@/types";
-import { useUser } from "@/context/UserProvider";
+import { useUserInformation } from "@/context/UserInfoProvider";
 
 const Post = ({ post }: { post: IPost }) => {
-  const { user } = useUser();
+  const { user } = useUserInformation();
   const {
     _id: postId,
     author,
@@ -47,7 +46,11 @@ const Post = ({ post }: { post: IPost }) => {
       <div className="flex items-center gap-4">
         <Link href={`/profile/${authorId}`}>
           <Avatar className="cursor-pointer">
-            <AvatarImage src={profilePicture} className="" alt="User Profile" />
+            <AvatarImage
+              src={user?.profilePicture}
+              className=""
+              alt="User Profile"
+            />
             <AvatarFallback>{getInitials(name)}</AvatarFallback>
           </Avatar>
         </Link>
@@ -63,7 +66,16 @@ const Post = ({ post }: { post: IPost }) => {
         <Link href={`/post/${postId}`}>
           <h2 className="text-2xl font-medium">{title}</h2>
         </Link>
-        <TruncateText text={content} wordLimit={10} postId={postId} />
+        <div className={`${content?.length > 30 ? "" : ""}`}>
+          <p
+            dangerouslySetInnerHTML={{
+              __html:
+                content.length > 30
+                  ? `${content.substring(0, 30)}...`
+                  : content,
+            }}
+          ></p>
+        </div>
       </div>
 
       <div>

@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { useState } from "react";
 
 interface TruncateTextProps {
   text: string;
@@ -17,7 +16,11 @@ const TruncateText = ({ text, wordLimit = 100, postId }: TruncateTextProps) => {
 
   return (
     <div>
-      {!isTruncated ? <span>{text}</span> : <span>{truncatedText}...</span>}
+      {!isTruncated ? (
+        <span className=""></span>
+      ) : (
+        <span>{truncatedText}...</span>
+      )}
 
       {isTruncated && (
         <Link
