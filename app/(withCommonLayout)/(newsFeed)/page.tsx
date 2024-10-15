@@ -7,19 +7,12 @@ import { IPost } from "@/types";
 import React from "react";
 
 const HomePage = () => {
-  // const res = await fetch(`${envConfig.baseApi}/post`, {
-  //   cache: "no-store",
-  // });
-  // const data = await res.json();
-
-  // console.log(data?.data);
-
-  const { data, isLoading } = useGetAllPost();
+  const { data, isPending, isLoading } = useGetAllPost();
   console.log(data);
 
   return (
     <div className="">
-      {isLoading && <PostLoadingSkeleton />}
+      {isPending || (isLoading && <PostLoadingSkeleton />)}
       {data?.data?.map((item: IPost) => (
         <Post key={item._id} post={item} />
       ))}

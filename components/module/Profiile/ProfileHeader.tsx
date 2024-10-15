@@ -1,14 +1,13 @@
 "use client";
 
-import Loading from "@/components/shared/Loading";
 import { Button } from "@/components/ui/button";
-import { useUser } from "@/context/UserProvider";
+import { useUserInformation } from "@/context/UserInfoProvider";
 import {
   useCoverPhotoUpload,
   useProfilePictureUpload,
 } from "@/hooks/user.hook";
 import { TUser } from "@/types";
-import { CameraIcon, VerifiedIcon } from "lucide-react";
+import { CameraIcon, LoaderIcon, VerifiedIcon } from "lucide-react";
 import Image from "next/image";
 import { ChangeEvent, useState } from "react";
 
@@ -18,7 +17,8 @@ interface IProps {
 }
 
 const ProfileHeader = ({ userInfo, paramsId }: IProps) => {
-  const { user: currentUser } = useUser();
+  const { user: currentUser, isLoading: userInformationLoading } =
+    useUserInformation();
   const { mutate: handleCoverUpload, isPending } = useCoverPhotoUpload();
   const { mutate: handleProfilePhotoUpload, isPending: profilePhotoPending } =
     useProfilePictureUpload();
@@ -60,22 +60,27 @@ const ProfileHeader = ({ userInfo, paramsId }: IProps) => {
     <div className="relative w-full lg:h-[300px] h-[200px]">
       {/* Cover Photo */}
       <div className="group  relative border h-full">
-        {isPending && <Loading />}
-        {userInfo?.coverPhoto && (
-          <Image
-            src={coverImagePreview || userInfo?.coverPhoto}
-            alt="Cover Photo"
-            width={1280}
-            height={600}
-            className="w-full h-full object-cover"
-          />
+        {userInformationLoading || isPending ? (
+          <div className="flex items-center justify-center w-full h-full">
+            <LoaderIcon className="animate-spin" />
+          </div>
+        ) : (
+          userInfo?.coverPhoto && (
+            <Image
+              src={coverImagePreview || (currentUser?.coverPhoto as string)}
+              alt="Cover Photo"
+              width={1280}
+              height={600}
+              className="w-full h-full object-cover"
+            />
+          )
         )}
 
         {currentUser?._id === paramsId &&
           !coverImagePreview &&
           !userInfo?.coverPhoto && (
             <div>
-              <div className="lg:h-[300px] h-[200px] flex items-center justify-center w-full flex-col gap-4">
+              <div className="lg:h-[300px] dark:bg-[#121212] h-[200px] flex items-center justify-center w-full flex-col gap-4">
                 <h2 className="text-lg capitalize">Upload Cover Photo</h2>
                 <label
                   htmlFor="cover"
@@ -118,38 +123,46 @@ const ProfileHeader = ({ userInfo, paramsId }: IProps) => {
       </div>
 
       {/* Profile Picture */}
-      {profilePhotoPending && <Loading />}
       <div className=" absolute lg:left-[40px] lg:translate-x-0 md:-bottom-[100px] -bottom-[150px] left-0 flex items-center   w-full justify-between">
         <div className="flex items-center flex-col md:flex-row  gap-6">
-          <div className="group lg:size-[150px] size-[140px] relative">
-            {currentUser?._id === paramsId && (
-              <div className="lg:size-[150px] size-[140px] absolute rounded-full inset-0 bg-transparent group-hover:bg-black/50"></div>
-            )}
-            <Image
-              src={
-                userInfo?.profilePicture ||
-                "https://cdn-icons-png.flaticon.com/512/149/149071.png"
-              }
-              alt="Profile Photo"
-              width={400}
-              height={400}
-              className="w-full h-full rounded-full"
-            />
-            {currentUser?._id === paramsId && (
-              <div className="size-[50px] rounded-full opacity-0 group-hover:opacity-100 ease-in duration-300 bg-primary text-white absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center cursor-pointer">
-                <label htmlFor="profilePhoto">
-                  <input
-                    type="file"
-                    id="profilePhoto"
-                    className="hidden"
-                    accept="image/*"
-                    onChange={handleProfilePhotoChange}
-                  />
-                  <CameraIcon size={30} className="cursor-pointer" />
-                </label>
+          <div className="group lg:size-[150px] size-[140px] relative border-2 rounded-full dark:border-white">
+            {profilePhotoPending ? (
+              <div className="flex items-center justify-center w-full h-full">
+                <LoaderIcon className="animate-spin" />
               </div>
+            ) : (
+              <>
+                {currentUser?._id === paramsId && (
+                  <div className="lg:size-[150px] size-[140px] absolute rounded-full inset-0 bg-transparent group-hover:bg-black/50"></div>
+                )}
+                <Image
+                  src={
+                    currentUser?.profilePicture ||
+                    "https://cdn-icons-png.flaticon.com/512/149/149071.png"
+                  }
+                  alt="Profile Photo"
+                  width={400}
+                  height={400}
+                  className="w-full h-full rounded-full"
+                />
+                {currentUser?._id === paramsId && (
+                  <div className="size-[50px] rounded-full opacity-0 group-hover:opacity-100 ease-in duration-300 bg-primary text-white absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center cursor-pointer">
+                    <label htmlFor="profilePhoto">
+                      <input
+                        type="file"
+                        id="profilePhoto"
+                        className="hidden"
+                        accept="image/*"
+                        onChange={handleProfilePhotoChange}
+                      />
+                      <CameraIcon size={30} className="cursor-pointer" />
+                    </label>
+                  </div>
+                )}
+              </>
             )}
           </div>
+
           {/* profile name */}
           <div className="lg:mt-20">
             <h2 className="capitalize text-[20px] lg:text-[26px] font-bold text-foreground flex items-center gap-2">
