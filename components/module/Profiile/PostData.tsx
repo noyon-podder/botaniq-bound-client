@@ -3,11 +3,21 @@
 
 import { useGetAllPostsByUserId } from "@/hooks/user.hook";
 import Post from "./post/Post";
+import PostLoadingSkeleton from "@/components/shared/PostLoadingSkeleton";
 
 const PostData = ({ userId }: { userId: string }) => {
-  const { data } = useGetAllPostsByUserId(userId);
+  const { data, isPending } = useGetAllPostsByUserId(userId);
+
+  console.log("User Post By Specefic User", data);
   return (
     <div>
+      {isPending && <PostLoadingSkeleton />}
+      {data?.data?.length === 0 && (
+        <p className="text-center text-[20px] block  pt-10">
+          No Post Available
+        </p>
+      )}
+
       {data?.data.map((item: any) => (
         <Post post={item} key={item._id} />
       ))}

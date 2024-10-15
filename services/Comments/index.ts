@@ -45,3 +45,47 @@ export const getAllComment = async (postId: string) => {
     return { error: error.message || "An unknown error occurred." };
   }
 };
+
+// Update COMMENT
+export const updateComment = async (updateCommentData: {
+  commentId: string;
+  content: string;
+}) => {
+  const { commentId, content } = updateCommentData;
+  try {
+    const { data } = await axiosInstance.put(`/comment/${commentId}`, {
+      content,
+    });
+
+    return data;
+  } catch (error: any) {
+    console.error("Axios Error", error);
+
+    if (error.response) {
+      const errorMessage =
+        error.response.data?.message || "Failed to Update Comment.";
+      return { error: errorMessage };
+    }
+
+    return { error: error.message || "An unknown error occurred." };
+  }
+};
+
+// DELETE COMMENT
+export const deleteComment = async (commentId: string) => {
+  try {
+    const { data } = await axiosInstance.delete(`/comment/${commentId}`);
+
+    return data;
+  } catch (error: any) {
+    console.error("Axios Error", error);
+
+    if (error.response) {
+      const errorMessage =
+        error.response.data?.message || "Failed to Delete Comment.";
+      return { error: errorMessage };
+    }
+
+    return { error: error.message || "An unknown error occurred." };
+  }
+};

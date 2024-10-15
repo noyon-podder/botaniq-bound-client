@@ -4,6 +4,7 @@ import { useToast } from "./use-toast";
 import {
   createPost,
   downvotePost,
+  getAllPaidPost,
   getAllPost,
   getPostById,
   upvotePost,
@@ -42,6 +43,14 @@ export const useGetAllPost = () => {
   return useQuery({
     queryKey: ["POST"],
     queryFn: async () => await getAllPost(),
+  });
+};
+
+// GET ALL PAID POST
+export const useGetAllPaidPost = () => {
+  return useQuery({
+    queryKey: ["POST"],
+    queryFn: async () => await getAllPaidPost(),
   });
 };
 

@@ -2,7 +2,12 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useToast } from "./use-toast";
 import { IComment } from "@/types";
-import { createComment, getAllComment } from "@/services/Comments";
+import {
+  createComment,
+  deleteComment,
+  getAllComment,
+  updateComment,
+} from "@/services/Comments";
 import { queryClient } from "@/lib/Provider";
 
 // GET ALL COMMENT
@@ -28,6 +33,66 @@ export const useCreateComment = () => {
       queryClient.invalidateQueries({ queryKey: ["SINGLE_POST"] });
       toast({
         title: "Comment Post Success",
+      });
+    },
+    onError: (error: any) => {
+      console.log("Error Message", error);
+
+      toast({
+        variant: "destructive",
+        title: error.message || "An unknown error occurred.",
+      });
+    },
+  });
+};
+
+// DELETE COMMENT
+export const useUpdateComment = () => {
+  const { toast } = useToast();
+
+  return useMutation({
+    mutationKey: ["COMMENT"],
+    mutationFn: async (updateCommentData: {
+      commentId: string;
+      content: string;
+    }) => {
+      console.log();
+      const response = await updateComment(updateCommentData);
+      if (response.error) throw new Error(response.error);
+      return response;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["SINGLE_POST"] });
+      toast({
+        title: "Comment Update Success",
+      });
+    },
+    onError: (error: any) => {
+      console.log("Error Message", error);
+
+      toast({
+        variant: "destructive",
+        title: error.message || "An unknown error occurred.",
+      });
+    },
+  });
+};
+
+// DELETE COMMENT
+export const useDeleteComment = () => {
+  const { toast } = useToast();
+
+  return useMutation({
+    mutationKey: ["COMMENT"],
+    mutationFn: async (commentId: string) => {
+      const response = await deleteComment(commentId);
+      if (response.error) throw new Error(response.error);
+      return response;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["SINGLE_POST"] });
+      toast({
+        title: "Comment Delete Success",
       });
     },
     onError: (error: any) => {

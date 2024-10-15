@@ -100,8 +100,8 @@ const Post = ({ post }: { post: IPost }) => {
               post?.upvotedBy?.find(
                 (id) => id.toString() === user?._id.toString()
               )
-                ? "text-blue-600" // Apply this class if the user has downvoted
-                : "text-gray-400" // Apply this class if the user has not downvoted
+                ? "text-blue-600"
+                : "text-gray-400"
             }`}
             size={24}
             fill={
@@ -123,24 +123,26 @@ const Post = ({ post }: { post: IPost }) => {
               post?.downvotedBy?.some(
                 (id) => id.toString() === user?._id.toString()
               )
-                ? "text-blue-600" // Apply this class if the user has downvoted
-                : "text-gray-400" // Apply this class if the user has not downvoted
+                ? "text-blue-600"
+                : "text-gray-400"
             }`}
             size={24}
             fill={
               post?.downvotedBy?.some(
                 (id) => id.toString() === user?._id.toString()
               )
-                ? "#3B82F6" // Fill with blue color if user has downvoted
-                : "none" // No fill if user has not downvoted
+                ? "#3B82F6"
+                : "none"
             }
           />
           Dislike
         </div>
-        <div className="flex items-center gap-2 px-4 bg-transparent hover:bg-gray-200 dark:hover:bg-gray-800 cursor-pointer rounded-md py-2">
-          <MessageSquare className="text-gray-400" />
-          Comment
-        </div>
+        <Link href={`/post/${postId}`}>
+          <div className="flex items-center gap-2 px-4 bg-transparent hover:bg-gray-200 dark:hover:bg-gray-800 cursor-pointer rounded-md py-2">
+            <MessageSquare className="text-gray-400" />
+            Comment
+          </div>
+        </Link>
         <div className="flex items-center gap-2 px-4 bg-transparent hover:bg-gray-200 dark:hover:bg-gray-800 cursor-pointer rounded-md py-2">
           <Copy className="text-gray-400" />
           Copy

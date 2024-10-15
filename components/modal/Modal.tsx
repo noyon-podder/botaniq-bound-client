@@ -7,7 +7,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "../ui/dialog";
-import { Button } from "../ui/button";
 
 interface IProps {
   triggerButton: string;
@@ -18,9 +17,9 @@ interface IProps {
 const Modal = ({ triggerButton, title, children }: IProps) => {
   return (
     <Dialog>
-      <Button>
-        <DialogTrigger>{triggerButton}</DialogTrigger>
-      </Button>
+      <DialogTrigger>
+        <p>{triggerButton}</p>
+      </DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>

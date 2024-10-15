@@ -7,14 +7,15 @@ import Loading from "@/components/shared/Loading";
 import { useUser } from "@/context/UserProvider";
 import { useCreateComment } from "@/hooks/comment.hook";
 import { useGetPostById } from "@/hooks/post.hook";
-import { Send } from "lucide-react";
+import { Loader, Send } from "lucide-react";
 import { useState } from "react";
 
 const SinglePostPage = ({ params }: { params: { postId: string } }) => {
   const { user } = useUser();
   const postId = params.postId;
   const { data, isLoading } = useGetPostById(postId);
-  const { mutate: handleCreateComment } = useCreateComment();
+  const { mutate: handleCreateComment, isPending: commentPending } =
+    useCreateComment();
 
   const [comment, setComment] = useState("");
 
@@ -61,8 +62,11 @@ const SinglePostPage = ({ params }: { params: { postId: string } }) => {
             className="flex items-center gap-2 px-3 py-1 bg-primary text-white h-10 rounded-md justify-center hover:bg-green-600"
             type="submit"
           >
-            Send
-            <Send size={16} />
+            {commentPending ? (
+              <Loader size={20} className="animate-spin" />
+            ) : (
+              <Send size={16} />
+            )}
           </button>
         </form>
         <h2 className="font-medium capitalize">

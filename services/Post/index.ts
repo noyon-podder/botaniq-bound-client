@@ -47,6 +47,25 @@ export const getAllPost = async () => {
   }
 };
 
+// GET ALL Paid POST
+export const getAllPaidPost = async () => {
+  try {
+    const { data } = await axiosInstance.get(`/post/paid/posts`);
+
+    return data;
+  } catch (error: any) {
+    console.error("Axios Error", error);
+
+    if (error.response) {
+      const errorMessage =
+        error.response.data?.message || "Failed to Retrieve Paid Post";
+      return { error: errorMessage };
+    }
+
+    return { error: error.message || "An unknown error occurred." };
+  }
+};
+
 //  GET POST BY ID
 export const getPostById = async (postId: string) => {
   try {

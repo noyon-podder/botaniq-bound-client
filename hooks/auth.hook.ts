@@ -76,7 +76,7 @@ export const useForgotPassword = () => {
     },
     onSuccess: () => {
       toast({
-        title: "User Find Successfully",
+        title: "Check Your Email!!",
       });
     },
     onError: (error: any) => {

@@ -8,7 +8,6 @@ interface IProps {
   params: { profileId: string };
 }
 const ProfileDetailsPage = async ({ params }: IProps) => {
-  const id = params?.profileId;
   const accessToken = cookies().get("accessToken")?.value;
 
   if (!accessToken) {
@@ -32,7 +31,7 @@ const ProfileDetailsPage = async ({ params }: IProps) => {
   console.log("Post Data", userInfo?.data.posts);
   return (
     <Container>
-      <ProfileHeader userInfo={userInfo.data} paramsId={id} />
+      <ProfileHeader userInfo={userInfo.data} paramsId={params?.profileId} />
       <div className="mt-40">
         <PostData userId={params.profileId} />
       </div>

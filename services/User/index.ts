@@ -23,9 +23,9 @@ export const getSingleUser = async (id: string) => {
 };
 
 // GET ALL POSY BY A USER
-export const getAllPostsByUserId = async (id: string) => {
+export const getAllPostsByUserId = async (userId: string) => {
   try {
-    const { data } = await axiosInstance.get(`/user/${id}`);
+    const { data } = await axiosInstance.get(`/user/${userId}`);
 
     return data;
   } catch (error: any) {
@@ -75,6 +75,28 @@ export const profilePictureUpload = async (image: FormData) => {
     if (error.response) {
       const errorMessage =
         error.response.data?.message || "Failed to Upload Image.";
+      return { error: errorMessage };
+    }
+
+    // For any other errors, return generic message
+    return { error: error.message || "An unknown error occurred." };
+  }
+};
+
+// VERIFY USER
+export const verifyUser = async () => {
+  try {
+    const { data } = await axiosInstance.post("/user/verify");
+
+    return data;
+  } catch (error: any) {
+    console.error("Axios Error", error);
+
+    // If error response exists, extract error message
+    if (error.response) {
+      const errorMessage =
+        error.response.data?.message || "Failed to User Verified.";
+
       return { error: errorMessage };
     }
 

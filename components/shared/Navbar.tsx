@@ -9,14 +9,14 @@ import { useState } from "react";
 import MenuSidebarToggle from "../custom/MenuSidebarToggle";
 import { useUser } from "@/context/UserProvider";
 import AvatarDropDown from "../custom/AvatarDropDown";
-import { useUserInformation } from "@/context/UserInfoProvider";
 
 const Navbar = () => {
   const [searchShow, setSearchShow] = useState(false);
   const { user } = useUser();
-  const { user: userInfo } = useUserInformation();
 
-  console.log("user Information: ", userInfo);
+  const [searchValue, setSearchValue] = useState("");
+
+  console.log(searchValue);
 
   return (
     <div className="bg-accent lg:h-[80px] py-4 xl:px-10 px-5 fixed top-0 w-full z-[500] shadow-sm">
@@ -30,9 +30,15 @@ const Navbar = () => {
 
         <div className=" justify-center flex">
           <div className="lg:flex xl:gap-16 lg:gap-10 items-center hidden ">
-            <div className="relative xl:w-[600px] lg:w-[450px]">
-              <Input placeholder="Search" className="pl-10 " />
-              <Search className="absolute top-1/2 left-[6px] -translate-y-1/2 text-gray-500 " />
+            <div className="bg-red-800 max-h-[550px] h-full">
+              <div className="relative xl:w-[600px] lg:w-[450px]">
+                <Input
+                  placeholder="Search"
+                  className="pl-10 "
+                  onChange={(e) => setSearchValue(e.target.value)}
+                />
+                <Search className="absolute top-1/2 left-[6px] -translate-y-1/2 text-gray-500 " />
+              </div>
             </div>
 
             <Link href="/user-dashboard/create-post">

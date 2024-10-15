@@ -5,24 +5,15 @@ import LeafInput from "@/components/form/LeafInput";
 import Loading from "@/components/shared/Loading";
 import { Button } from "@/components/ui/button";
 import { useForgotPassword } from "@/hooks/auth.hook";
-import { useRouter } from "next/navigation";
 import React from "react";
 
 const ForgotPasswordPage = () => {
-  const router = useRouter();
-  const {
-    mutate: handleForPassword,
-    isSuccess,
-    isPending,
-  } = useForgotPassword();
+  const { mutate: handleForPassword, isPending } = useForgotPassword();
   const handleForgotPasswordForm = (email: string) => {
     console.log("From forgot password", email);
     handleForPassword(email);
   };
 
-  if (isSuccess) {
-    router.push("/reset-password");
-  }
   return (
     <>
       {isPending && <Loading />}
