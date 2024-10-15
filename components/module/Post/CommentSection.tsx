@@ -5,6 +5,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 import CommentDropDownAction from "./CommentDropDownAction";
 import { useDeleteComment } from "@/hooks/comment.hook";
+import { useUserInformation } from "@/context/UserInfoProvider";
 
 const CommentSection = ({ comments }: any) => {
   const sortedComments = comments?.sort((a: any, b: any) => {
@@ -12,12 +13,13 @@ const CommentSection = ({ comments }: any) => {
   });
 
   const { mutate: deleteComment } = useDeleteComment();
+  const { user } = useUserInformation();
 
   const handleDeleteComment = (commentId: string) => {
     deleteComment(commentId);
   };
 
-  console.log(sortedComments);
+  console.log({ sortedComments });
   return (
     <div>
       <div className="mt-10">
@@ -42,12 +44,14 @@ const CommentSection = ({ comments }: any) => {
               </p>
 
               {/* hover the show action  */}
-              <div className="absolute right-5 top-3">
-                <CommentDropDownAction
-                  handleDeleteComment={handleDeleteComment}
-                  commentId={item._id}
-                />
-              </div>
+              {item.author._id === user?._id && (
+                <div className="absolute right-5 top-3">
+                  <CommentDropDownAction
+                    handleDeleteComment={handleDeleteComment}
+                    commentId={item._id}
+                  />
+                </div>
+              )}
             </div>
 
             {item?.replies?.length > 0 &&
