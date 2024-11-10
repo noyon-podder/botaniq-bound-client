@@ -7,12 +7,11 @@ import { IPost } from "@/types";
 import React from "react";
 
 const HomePage = () => {
-  const { data, isPending, isLoading } = useGetAllPost();
-  console.log(data);
+  const { data, isLoading } = useGetAllPost();
 
   return (
     <div className="">
-      {isPending || (isLoading && <PostLoadingSkeleton />)}
+      {isLoading && <PostLoadingSkeleton />}
       {data?.data?.map((item: IPost) => (
         <Post key={item._id} post={item} />
       ))}

@@ -28,7 +28,7 @@ export const useCreatePost = () => {
       });
     },
     onError: (error: any) => {
-      console.log("Error Message", error);
+      console.error("Error Message", error);
 
       toast({
         variant: "destructive",
@@ -79,7 +79,7 @@ export const useUpVotes = () => {
       });
     },
     onError: (error: any) => {
-      console.log("Error Message", error);
+      console.error("Error Message", error);
 
       toast({
         variant: "destructive",
@@ -106,7 +106,7 @@ export const useDownVotes = () => {
       });
     },
     onError: (error: any) => {
-      console.log("Error Message", error);
+      console.error("Error Message", error);
 
       toast({
         variant: "destructive",

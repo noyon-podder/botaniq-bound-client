@@ -9,11 +9,13 @@ const AuthRoutes = ["/login", "/register", "/forgot-password"];
 const roleBasedRoutes = {
   USER: [
     /^\/user-dashboard(\/[^\/]*)?$/,
+    /^\/post(\/[^\/]*)?$/,
     /^\/profile(\/.*)?$/,
     /^\/paid-post(\/.*)?$/,
   ],
   ADMIN: [
     /^\/admin-dashboard\/[^\/]+$/,
+    /^\/post(\/[^\/]*)?$/,
     /^\/profile(\/.*)?$/,
     /^\/paid-post(\/.*)?$/,
   ],
@@ -49,6 +51,7 @@ export const config = {
   matcher: [
     "/login",
     "/register",
+    "/post/:page*",
     "/paid-post",
     "/user-dashboard/:page*",
     "/admin-dashboard/:page*",

@@ -10,7 +10,7 @@ import {
 } from "react";
 import { useUser } from "./UserProvider";
 
-import { useGetSingleUser } from "@/hooks/user.hook";
+import { useGetMe } from "@/hooks/user.hook";
 
 interface IUserProviderValues {
   user: TUser | null;
@@ -29,7 +29,12 @@ const UserInfoProvider = ({ children }: { children: ReactNode }) => {
 
   // Fetch the user data using the user's email
 
-  const { data, isFetching } = useGetSingleUser(user?._id as string);
+  console.log("User Provider: ", userInfo);
+
+  // const { data, isFetching } = useGetSingleUser(user?._id as string);
+  const { data, isFetching } = useGetMe();
+
+  console.log("GET ME USER FROM USE PROVIDER", data);
   useEffect(() => {
     if (data?.data && !isFetching) {
       setUserInfo(data.data);

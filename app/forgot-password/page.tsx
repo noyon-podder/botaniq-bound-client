@@ -10,7 +10,6 @@ import React from "react";
 const ForgotPasswordPage = () => {
   const { mutate: handleForPassword, isPending } = useForgotPassword();
   const handleForgotPasswordForm = (email: string) => {
-    console.log("From forgot password", email);
     handleForPassword(email);
   };
 

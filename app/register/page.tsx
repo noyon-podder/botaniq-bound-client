@@ -31,7 +31,7 @@ const RegisterPage = () => {
       email: data.email,
       password: data.password,
     };
-    console.log("userData", userData);
+
     handleUserRegistration(userData);
     userRegisterLoading(true);
   };

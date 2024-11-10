@@ -8,7 +8,6 @@ import PostLoadingSkeleton from "@/components/shared/PostLoadingSkeleton";
 const PostData = ({ userId }: { userId: string }) => {
   const { data, isPending } = useGetAllPostsByUserId(userId);
 
-  console.log("User Post By Specefic User", data);
   return (
     <div>
       {isPending && <PostLoadingSkeleton />}
@@ -18,7 +17,7 @@ const PostData = ({ userId }: { userId: string }) => {
         </p>
       )}
 
-      {data?.data.map((item: any) => (
+      {data?.data?.map((item: any) => (
         <Post post={item} key={item._id} />
       ))}
     </div>

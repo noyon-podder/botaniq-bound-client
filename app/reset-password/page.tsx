@@ -46,7 +46,7 @@ const SetNewPassword = () => {
       });
       return;
     }
-    console.log("Form Submitted", data);
+
     const passwordPayload = {
       email: email,
       newPassword: data.confirmPassword,

@@ -11,21 +11,24 @@ import { Copy, MessageSquare, ThumbsDown, ThumbsUp } from "lucide-react";
 import { useDownVotes, useUpVotes } from "@/hooks/post.hook";
 import { IPost } from "@/types";
 import { useUserInformation } from "@/context/UserInfoProvider";
+import { useRouter } from "next/navigation";
 
 const Post = ({ post }: { post: IPost }) => {
   const { user } = useUserInformation();
+
+  console.log("Uesr: ", user);
   const {
     _id: postId,
     author,
     title,
-    content,
     images,
     upvotes,
     downvotes,
     comments,
     views,
   } = post;
-  const { name, profilePicture, _id: authorId } = author;
+  const { name, _id: authorId } = author;
+  const router = useRouter();
 
   const timeAgo = moment(post.createdAt).fromNow();
   const { mutate: handleUpvote } = useUpVotes();
@@ -33,13 +36,21 @@ const Post = ({ post }: { post: IPost }) => {
   const [upvotesIcon, setUpvotesIcon] = useState(false);
 
   const handleUpvoteFunction = () => {
+    if (!user) {
+      return router.push("/login");
+    }
     setUpvotesIcon(!upvotesIcon);
     handleUpvote(postId);
   };
 
   const handleDownvoteFunction = () => {
+    if (!user) {
+      return router.push("/login");
+    }
+
     handleDownVote(postId);
   };
+
   return (
     <div className="border p-5 mb-5 bg-white dark:bg-accent">
       {/* PROFILE INFO */}
@@ -47,7 +58,7 @@ const Post = ({ post }: { post: IPost }) => {
         <Link href={`/profile/${authorId}`}>
           <Avatar className="cursor-pointer">
             <AvatarImage
-              src={user?.profilePicture}
+              src={author?.profilePicture}
               className=""
               alt="User Profile"
             />
@@ -64,9 +75,11 @@ const Post = ({ post }: { post: IPost }) => {
       {/* POST INFO */}
       <div className="my-6">
         <Link href={`/post/${postId}`}>
-          <h2 className="text-2xl font-medium">{title}</h2>
+          <h2 className="text-2xl font-semibold text-gray-900 dark:text-gray-300">
+            {title}
+          </h2>
         </Link>
-        <div className={`${content?.length > 30 ? "" : ""}`}>
+        {/* <div className={`${content?.length > 30 ? "" : ""}`}>
           <p
             dangerouslySetInnerHTML={{
               __html:
@@ -75,7 +88,7 @@ const Post = ({ post }: { post: IPost }) => {
                   : content,
             }}
           ></p>
-        </div>
+        </div> */}
       </div>
 
       <div>

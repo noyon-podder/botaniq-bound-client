@@ -32,7 +32,6 @@ const LeafForm = ({ children, defaultValues, resolver, onSubmit }: IProps) => {
   const methods = useForm(formConfig);
 
   const submit: SubmitHandler<FieldValues> = (data) => {
-    console.log("LEAF FORM", data);
     onSubmit(data);
     methods.reset();
   };

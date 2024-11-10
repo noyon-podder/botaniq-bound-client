@@ -13,14 +13,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useUser } from "@/context/UserProvider";
+import { useUserInformation } from "@/context/UserInfoProvider";
 import { useCreatePost } from "@/hooks/post.hook";
 import { ChangeEvent, useState } from "react";
 import { FieldValues, SubmitHandler } from "react-hook-form";
 import "react-quill/dist/quill.snow.css";
 
 const CreateNewPostForm = () => {
-  const { user } = useUser();
+  const { user } = useUserInformation();
+
+  console.log(user);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [imageFiles, setImageFiles] = useState<File[] | []>([]);
   const [imagePreviews, setImagePreviews] = useState<string[] | []>([]);
@@ -37,6 +39,8 @@ const CreateNewPostForm = () => {
       category: selectedCategory,
       author: user?._id,
     };
+
+    console.log(postData);
 
     formData.append("data", JSON.stringify(postData));
 

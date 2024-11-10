@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import FollowButton from "@/components/custom/FollowButton";
 import { useUserInformation } from "@/context/UserInfoProvider";
 import {
   useCoverPhotoUpload,
@@ -9,7 +9,7 @@ import {
 import { TUser } from "@/types";
 import { CameraIcon, LoaderIcon, VerifiedIcon } from "lucide-react";
 import Image from "next/image";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent } from "react";
 
 interface IProps {
   userInfo: TUser;
@@ -22,9 +22,6 @@ const ProfileHeader = ({ userInfo, paramsId }: IProps) => {
   const { mutate: handleCoverUpload, isPending } = useCoverPhotoUpload();
   const { mutate: handleProfilePhotoUpload, isPending: profilePhotoPending } =
     useProfilePictureUpload();
-  const [coverImagePreview, setCoverImagePreview] = useState<string | null>(
-    null
-  );
 
   //   if (isLoading) return <Loading />;
 
@@ -37,9 +34,7 @@ const ProfileHeader = ({ userInfo, paramsId }: IProps) => {
       handleCoverUpload(formData);
 
       const reader = new FileReader();
-      reader.onloadend = () => {
-        setCoverImagePreview(reader.result as string);
-      };
+      reader.onloadend = () => {};
       reader.readAsDataURL(file);
     }
   };
@@ -67,7 +62,7 @@ const ProfileHeader = ({ userInfo, paramsId }: IProps) => {
         ) : (
           userInfo?.coverPhoto && (
             <Image
-              src={coverImagePreview || (currentUser?.coverPhoto as string)}
+              src={userInfo?.coverPhoto as string}
               alt="Cover Photo"
               width={1280}
               height={600}
@@ -76,50 +71,46 @@ const ProfileHeader = ({ userInfo, paramsId }: IProps) => {
           )
         )}
 
-        {currentUser?._id === paramsId &&
-          !coverImagePreview &&
-          !userInfo?.coverPhoto && (
-            <div>
-              <div className="lg:h-[300px] dark:bg-[#121212] h-[200px] flex items-center justify-center w-full flex-col gap-4">
-                <h2 className="text-lg capitalize">Upload Cover Photo</h2>
-                <label
-                  htmlFor="cover"
-                  className="px-5 py-2 bg-primary text-white cursor-pointer rounded-md"
-                >
-                  <input
-                    type="file"
-                    id="cover"
-                    className="hidden"
-                    accept="image/*"
-                    onChange={(e) => handleCoverPhotoChange(e)}
-                  />
-                  upload
-                </label>
-              </div>
-            </div>
-          )}
-
-        {/* Cover Photo Upload Icon (Visible only on hover) */}
-        {userInfo?.coverPhoto &&
-          !coverImagePreview &&
-          currentUser?._id === paramsId && (
-            <div className="absolute bottom-5 right-5  ease-in-out duration-300 z-50">
+        {currentUser?._id === paramsId && !currentUser?.coverPhoto && (
+          <div>
+            <div className="lg:h-[300px] dark:bg-[#121212] h-[200px] flex items-center justify-center w-full flex-col gap-4">
+              <h2 className="text-lg capitalize">Upload Cover Photo</h2>
               <label
-                htmlFor="coverPhoto"
-                className="px-2 cursor-pointer py-1 bg-primary text-white rounded-sm flex items-center gap-2"
+                htmlFor="cover"
+                className="px-5 py-2 bg-primary text-white cursor-pointer rounded-md"
               >
                 <input
                   type="file"
-                  id="coverPhoto"
+                  id="cover"
                   className="hidden"
                   accept="image/*"
-                  onChange={handleCoverPhotoChange}
+                  onChange={(e) => handleCoverPhotoChange(e)}
                 />
-                <CameraIcon size={18} className="cursor-pointer" />
-                Edit cover photo
+                upload
               </label>
             </div>
-          )}
+          </div>
+        )}
+
+        {/* Cover Photo Upload Icon (Visible only on hover) */}
+        {currentUser?.coverPhoto && currentUser?._id === paramsId && (
+          <div className="absolute bottom-5 right-5  ease-in-out duration-300 z-50">
+            <label
+              htmlFor="coverPhoto"
+              className="px-2 cursor-pointer py-1 bg-primary text-white rounded-sm flex items-center gap-2"
+            >
+              <input
+                type="file"
+                id="coverPhoto"
+                className="hidden"
+                accept="image/*"
+                onChange={handleCoverPhotoChange}
+              />
+              <CameraIcon size={18} className="cursor-pointer" />
+              Edit cover photo
+            </label>
+          </div>
+        )}
       </div>
 
       {/* Profile Picture */}
@@ -137,7 +128,7 @@ const ProfileHeader = ({ userInfo, paramsId }: IProps) => {
                 )}
                 <Image
                   src={
-                    currentUser?.profilePicture ||
+                    userInfo?.profilePicture ||
                     "https://cdn-icons-png.flaticon.com/512/149/149071.png"
                   }
                   alt="Profile Photo"
@@ -176,18 +167,14 @@ const ProfileHeader = ({ userInfo, paramsId }: IProps) => {
               <p className="text-[16px] text-foreground">
                 {userInfo?.followers?.length} Followers{" "}
                 <b className="mx-1">.</b>
-                {userInfo?.following?.length} Followers
+                {userInfo?.following?.length} Following
               </p>
             </div>
           </div>
         </div>
 
         {/* FOllow button */}
-        {currentUser?._id !== paramsId && (
-          <div className="flex justify-end mt-10 lg:mr-10">
-            <Button>Follow</Button>
-          </div>
-        )}
+        {currentUser?._id !== paramsId && <FollowButton userId={paramsId} />}
       </div>
     </div>
   );

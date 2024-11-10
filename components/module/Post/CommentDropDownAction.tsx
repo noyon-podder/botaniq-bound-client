@@ -29,8 +29,6 @@ const CommentDropDownAction = ({ handleDeleteComment, commentId }: any) => {
       content: data.content,
     };
 
-    console.log(commentData);
-
     handleUpdateComment(commentData);
     handleClose(); // Close the dropdown after updating
   };

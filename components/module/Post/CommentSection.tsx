@@ -19,7 +19,8 @@ const CommentSection = ({ comments }: any) => {
     deleteComment(commentId);
   };
 
-  console.log({ sortedComments });
+  console.log(sortedComments);
+
   return (
     <div>
       <div className="mt-10">

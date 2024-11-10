@@ -16,11 +16,8 @@ const PaidPostPage = () => {
 
   const handleVerifiedUser = () => {
     const response = verifiedUser();
-
-    console.log({ response });
   };
 
-  console.log(data);
   return (
     <div>
       {isLoading && <PostLoadingSkeleton />}

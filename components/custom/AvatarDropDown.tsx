@@ -1,23 +1,24 @@
 import Link from "next/link";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { Avatar, AvatarImage } from "../ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
-import { useUser } from "@/context/UserProvider";
 import { logout } from "@/services/AuthService";
 import { toast } from "@/hooks/use-toast";
 import { protectedRoutes } from "@/constant";
 import { usePathname, useRouter } from "next/navigation";
-import { getInitials } from "@/utils/getInitials";
+
 import { useUserInformation } from "@/context/UserInfoProvider";
+import { LogOutIcon, UserCircle } from "lucide-react";
+import { DashboardIcon } from "@radix-ui/react-icons";
 
 const AvatarDropDown = () => {
-  const { user, setIsLoading: userLoading } = useUser();
+  // const { user, setIsLoading: userLoading } = useUser();
   const pathname = usePathname();
   const router = useRouter();
-  const { user: userInfo } = useUserInformation();
+  const { user: userInfo, setIsLoading: userLoading } = useUserInformation();
 
   const handleLogout = () => {
     logout();
@@ -39,25 +40,30 @@ const AvatarDropDown = () => {
             className=""
             alt="User Profile"
           />
-          <AvatarFallback>{getInitials(user?.name as string)}</AvatarFallback>
+          {/* <AvatarFallback>{getInitials(userInfo?.name)}</AvatarFallback> */}
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-48 bg-accent dark:bg-background z-[1000] relative">
+        <div className="py-2 mb-2 bg-[#f2f2f2] dark:bg-[#121212] border-double border-b-2 px-3">
+          <h2 className="text-base font-medium">{userInfo?.name}</h2>
+          <p className="text-sm text-muted-foreground">{userInfo?.email}</p>
+        </div>
         <ul className="">
           <li className="">
             <Link
-              href={`/profile/${user?._id}`}
-              className="px-5 py-[10px] border-b border-border text-base font-normal hover:bg-primary hover:text-white  block "
+              href={`/profile/${userInfo?._id}`}
+              className="px-3 py-[10px] border-b border-border text-muted-foreground text-base font-normal hover:bg-primary hover:text-white  flex items-center gap-2"
             >
-              Profile
+              <UserCircle className="" size={20} /> Profile
             </Link>
           </li>
-          {user?.role === "ADMIN" ? (
+          {userInfo?.role === "ADMIN" ? (
             <li className="">
               <Link
                 href="/admin-dashboard"
-                className="text-base font-normal hover:bg-primary hover:text-white px-5 py-[10px] border-b border-border block"
+                className="px-3 py-[10px] border-b border-border text-muted-foreground text-base font-normal hover:bg-primary hover:text-white  flex items-center gap-2"
               >
+                <DashboardIcon fontSize={20} />
                 Admin Dashboard
               </Link>
             </li>
@@ -65,8 +71,9 @@ const AvatarDropDown = () => {
             <li className="">
               <Link
                 href="/user-dashboard"
-                className="text-base font-normal hover:bg-primary hover:text-white  px-5 py-[10px] border-b border-border block"
+                className="px-3 py-[10px] border-b border-border text-muted-foreground text-base font-normal hover:bg-primary hover:text-white  flex items-center gap-2"
               >
+                <DashboardIcon fontSize={20} />
                 User Dashboard
               </Link>
             </li>
@@ -74,8 +81,9 @@ const AvatarDropDown = () => {
 
           <li
             onClick={handleLogout}
-            className="px-5 py-[10px] cursor-pointer hover:bg-primary hover:text-white"
+            className="px-3 py-[10px] border-b border-border text-muted-foreground text-base font-normal hover:bg-primary hover:text-white  flex items-center gap-2"
           >
+            <LogOutIcon size={20} />
             Log out
           </li>
         </ul>

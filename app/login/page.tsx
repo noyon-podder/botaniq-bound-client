@@ -27,8 +27,6 @@ const LoginPage = () => {
   const redirect = searchParams.get("redirect");
 
   const handleLoginForm: SubmitHandler<FieldValues> = (data) => {
-    console.log(data);
-
     handleUserLogin(data);
     userInfoLoading(true);
     userLoginLoading(true);

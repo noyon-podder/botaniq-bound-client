@@ -3,6 +3,24 @@
 
 import axiosInstance from "@/lib/AxiosInstance";
 
+// GET ME ROUTE
+export const getMe = async () => {
+  try {
+    const { data } = await axiosInstance.get("/user/userInfo/me");
+
+    return data;
+  } catch (error: any) {
+    console.error("Axios Error", error);
+
+    if (error.response) {
+      const errorMessage = error.response.data?.message || "Failed to get me";
+
+      return { error: errorMessage };
+    }
+    return { error: error.message || "An unknown error occurred." };
+  }
+};
+
 // GET CURRENT USER
 export const getSingleUser = async (id: string) => {
   try {
@@ -62,7 +80,7 @@ export const coverPhotoUpload = async (image: FormData) => {
   }
 };
 
-// COVER PHOTO UPLOAD
+// PROFILE PHOTO UPLOAD
 export const profilePictureUpload = async (image: FormData) => {
   try {
     const { data } = await axiosInstance.put("/user/profile-picture", image);
@@ -96,6 +114,30 @@ export const verifyUser = async () => {
     if (error.response) {
       const errorMessage =
         error.response.data?.message || "Failed to User Verified.";
+
+      return { error: errorMessage };
+    }
+
+    // For any other errors, return generic message
+    return { error: error.message || "An unknown error occurred." };
+  }
+};
+
+// FOLLOW USER
+export const followUser = async (targetedUserId: string) => {
+  try {
+    const { data } = await axiosInstance.post("/user/follow", {
+      targetUserId: targetedUserId,
+    });
+
+    return data;
+  } catch (error: any) {
+    console.error("Axios Error", error);
+
+    // If error response exists, extract error message
+    if (error.response) {
+      const errorMessage =
+        error.response.data?.message || "Failed to User Follow.";
 
       return { error: errorMessage };
     }

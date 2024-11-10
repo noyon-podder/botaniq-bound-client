@@ -36,7 +36,7 @@ export const useCreateComment = () => {
       });
     },
     onError: (error: any) => {
-      console.log("Error Message", error);
+      console.error("Error Message", error);
 
       toast({
         variant: "destructive",
@@ -56,7 +56,6 @@ export const useUpdateComment = () => {
       commentId: string;
       content: string;
     }) => {
-      console.log();
       const response = await updateComment(updateCommentData);
       if (response.error) throw new Error(response.error);
       return response;
@@ -68,7 +67,7 @@ export const useUpdateComment = () => {
       });
     },
     onError: (error: any) => {
-      console.log("Error Message", error);
+      console.error("Error Message", error);
 
       toast({
         variant: "destructive",
@@ -96,7 +95,7 @@ export const useDeleteComment = () => {
       });
     },
     onError: (error: any) => {
-      console.log("Error Message", error);
+      console.error("Error Message", error);
 
       toast({
         variant: "destructive",

@@ -98,8 +98,6 @@ export const forgotPassword = async (email: string) => {
 export const resetPassword = async (payload: TResetPassword) => {
   const { email, newPassword, token } = payload;
 
-  console.log("Payload: ", payload);
-
   const resetPasswordData = {
     email,
     newPassword,
@@ -115,8 +113,6 @@ export const resetPassword = async (payload: TResetPassword) => {
         },
       }
     );
-
-    console.log("Reset Password: ", data);
 
     return data;
   } catch (error: any) {
@@ -138,8 +134,6 @@ export const resetPassword = async (payload: TResetPassword) => {
 export const getNewAccessToken = async () => {
   try {
     const refreshToken = cookies().get("refreshToken")?.value;
-
-    console.log("refresh token : ", refreshToken);
 
     const res = await axiosInstance({
       url: "/auth/refresh-token",

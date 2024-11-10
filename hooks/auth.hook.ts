@@ -26,7 +26,7 @@ export const useRegistration = () => {
       });
     },
     onError: (error: any) => {
-      console.log("Error Message", error);
+      console.error("Error Message", error);
 
       toast({
         variant: "destructive",
@@ -53,7 +53,7 @@ export const useUserLogin = () => {
       });
     },
     onError: (error: any) => {
-      console.log("Error Message", error);
+      console.error("Error Message", error);
 
       toast({
         variant: "destructive",
@@ -80,7 +80,7 @@ export const useForgotPassword = () => {
       });
     },
     onError: (error: any) => {
-      console.log("Error Message", error);
+      console.error("Error Message", error);
 
       toast({
         variant: "destructive",
@@ -111,7 +111,7 @@ export const useResetPassword = () => {
       });
     },
     onError: (error: any) => {
-      console.log("Error Message", error);
+      console.error("Error Message", error);
 
       toast({
         variant: "destructive",

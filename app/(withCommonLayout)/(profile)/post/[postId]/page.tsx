@@ -4,6 +4,7 @@ import CommentSection from "@/components/module/Post/CommentSection";
 import PostDetails from "@/components/module/Post/PostDetails";
 import Container from "@/components/shared/Container";
 import Loading from "@/components/shared/Loading";
+import { useUserInformation } from "@/context/UserInfoProvider";
 import { useUser } from "@/context/UserProvider";
 import { useCreateComment } from "@/hooks/comment.hook";
 import { useGetPostById } from "@/hooks/post.hook";
@@ -11,7 +12,7 @@ import { Loader, Send } from "lucide-react";
 import { useState } from "react";
 
 const SinglePostPage = ({ params }: { params: { postId: string } }) => {
-  const { user } = useUser();
+  const { user } = useUserInformation();
   const postId = params.postId;
   const { data, isLoading } = useGetPostById(postId);
   const { mutate: handleCreateComment, isPending: commentPending } =
@@ -24,20 +25,18 @@ const SinglePostPage = ({ params }: { params: { postId: string } }) => {
   const handleCommentSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    console.log(comment);
-
     const commentData = {
       authorId: user?._id,
       postId: postId,
       content: comment,
     };
 
+    console.log(commentData);
+
     handleCreateComment(commentData);
 
     setComment("");
   };
-
-  console.log(data?.data);
 
   // if (isSuccess) {
   //   setComment("");

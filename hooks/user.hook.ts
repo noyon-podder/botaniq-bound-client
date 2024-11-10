@@ -4,7 +4,9 @@
 
 import {
   coverPhotoUpload,
+  followUser,
   getAllPostsByUserId,
+  getMe,
   getSingleUser,
   profilePictureUpload,
   verifyUser,
@@ -19,9 +21,17 @@ export const useGetSingleUser = (id: string) => {
   return useQuery({
     queryKey: ["SINGLE_USER"],
     queryFn: async () => await getSingleUser(id),
-    staleTime: 10000,
-    refetchOnWindowFocus: true,
-    refetchInterval: 5000,
+    // staleTime: 10000,
+    // refetchOnWindowFocus: true,
+    // refetchInterval: 5000,
+  });
+};
+
+// USE GET ME
+export const useGetMe = () => {
+  return useQuery({
+    queryKey: ["GET_ME"],
+    queryFn: async () => await getMe(),
   });
 };
 
@@ -45,13 +55,15 @@ export const useCoverPhotoUpload = () => {
       return response;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["SINGLE_USER", "POST"] });
+      queryClient.invalidateQueries({
+        queryKey: ["SINGLE_USER", "GET_ME", "POST"],
+      });
       toast({
         title: "Cover Photo Upload Successfully",
       });
     },
     onError: (error: any) => {
-      console.log("Error Message", error);
+      console.error("Error Message", error);
 
       toast({
         variant: "destructive",
@@ -74,14 +86,14 @@ export const useProfilePictureUpload = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["SINGLE_USER", "POST"],
+        queryKey: ["SINGLE_USER", "GET_ME", "POST"],
       });
       toast({
         title: "Profile Picture Upload Successfully",
       });
     },
     onError: (error: any) => {
-      console.log("Error Message", error);
+      console.error("Error Message", error);
 
       toast({
         variant: "destructive",
@@ -102,7 +114,7 @@ export const useVerifiedUser = () => {
       const response = await verifyUser();
       if (response.error) throw new Error(response.error);
 
-      console.log("Verified User", response);
+      console.error("Verified User", response);
       router.push(response?.data?.payment_url);
       return response;
     },
@@ -115,7 +127,37 @@ export const useVerifiedUser = () => {
       });
     },
     onError: (error: any) => {
-      console.log("Error Message", error);
+      console.error("Error Message", error);
+
+      toast({
+        variant: "destructive",
+        title: error.message || "An unknown error occurred.",
+      });
+    },
+  });
+};
+
+// FOLLOW USER
+export const useFollowUser = () => {
+  const { toast } = useToast();
+
+  return useMutation({
+    mutationKey: ["PROFILE"],
+    mutationFn: async (targetedUserId: string) => {
+      const response = await followUser(targetedUserId);
+      if (response.error) throw new Error(response.error);
+      return response;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["SINGLE_USER", "POST", "FOLLOW"],
+      });
+      toast({
+        title: "User Follow Successfully",
+      });
+    },
+    onError: (error: any) => {
+      console.error("Error Message", error);
 
       toast({
         variant: "destructive",
