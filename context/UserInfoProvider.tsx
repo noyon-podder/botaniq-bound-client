@@ -8,7 +8,7 @@ import {
   useEffect,
   useState,
 } from "react";
-import { useUser } from "./UserProvider";
+// import { useUser } from "./UserProvider";
 
 import { useGetMe } from "@/hooks/user.hook";
 
@@ -25,10 +25,6 @@ const UserInfoProvider = ({ children }: { children: ReactNode }) => {
   const [userInfo, setUserInfo] = useState<TUser | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  const { user } = useUser();
-
-  // Fetch the user data using the user's email
-
   console.log("User Provider: ", userInfo);
 
   // const { data, isFetching } = useGetSingleUser(user?._id as string);
@@ -37,10 +33,10 @@ const UserInfoProvider = ({ children }: { children: ReactNode }) => {
   console.log("GET ME USER FROM USE PROVIDER", data);
   useEffect(() => {
     if (data?.data && !isFetching) {
-      setUserInfo(data.data);
+      setUserInfo(data?.data);
       setIsLoading(false);
     }
-  }, [data?.data, isFetching, user?._id]);
+  }, [data?.data, isFetching]);
 
   return (
     <UserContext.Provider

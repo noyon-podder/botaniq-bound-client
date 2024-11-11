@@ -17,7 +17,7 @@ const Navbar = () => {
   // const [searchValue, setSearchValue] = useState("");
 
   return (
-    <div className="bg-accent lg:h-[80px] py-4 xl:px-10 px-5 fixed top-0 w-full z-[500] shadow-sm">
+    <div className="bg-accent lg:h-[80px] py-4 xl:px-8 lg:px-6 px-5 fixed top-0 w-full z-[500] shadow-sm">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-5 ">
           <MenuSidebarToggle />

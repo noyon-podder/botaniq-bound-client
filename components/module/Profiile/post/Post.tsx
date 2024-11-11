@@ -16,7 +16,6 @@ import { useRouter } from "next/navigation";
 const Post = ({ post }: { post: IPost }) => {
   const { user } = useUserInformation();
 
-  console.log("Uesr: ", user);
   const {
     _id: postId,
     author,

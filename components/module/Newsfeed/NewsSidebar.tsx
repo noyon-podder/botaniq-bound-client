@@ -34,7 +34,7 @@ const NewsSidebar = () => {
   const { user } = useUserInformation();
 
   return (
-    <div>
+    <div className="">
       {user && (
         <>
           <div className="flex items-center gap-3 mt-2">
@@ -62,12 +62,12 @@ const NewsSidebar = () => {
           </div>
         </>
       )}
-      <ul className="mt-4">
+      <ul className="mt-4 ">
         {routes?.map((route) => (
           <li key={route.id}>
             <Link
               href={route.path}
-              className={`hover:bg-white dark:hover:bg-[#121212] flex gap-4 px-2 py-3 mb-1 text-lg font-medium hover:text-primary ${
+              className={`hover:bg-white dark:hover:bg-[#121212] flex gap-4 px-3 py-3 mb-1 text-lg font-medium hover:text-primary ${
                 pathname === route.path ? "text-primary" : "text-foreground"
               }`}
             >

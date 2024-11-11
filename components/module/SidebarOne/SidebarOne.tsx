@@ -4,7 +4,7 @@ import RecentPosts from "./RecentPosts";
 
 const SidebarOne = () => {
   return (
-    <div>
+    <div className="lg:block hidden">
       <NewsSidebar />
       <RecentPosts />
     </div>
