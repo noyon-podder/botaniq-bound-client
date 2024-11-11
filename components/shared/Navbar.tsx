@@ -14,7 +14,7 @@ const Navbar = () => {
   const [searchShow, setSearchShow] = useState(false);
   const { user } = useUser();
 
-  const [searchValue, setSearchValue] = useState("");
+  // const [searchValue, setSearchValue] = useState("");
 
   return (
     <div className="bg-accent lg:h-[80px] py-4 xl:px-10 px-5 fixed top-0 w-full z-[500] shadow-sm">
@@ -33,7 +33,7 @@ const Navbar = () => {
                 <Input
                   placeholder="Search"
                   className="pl-10 "
-                  onChange={(e) => setSearchValue(e.target.value)}
+                  // onChange={(e) => setSearchValue(e.target.value)}
                 />
                 <Search className="absolute top-1/2 left-[6px] -translate-y-1/2 text-gray-500 " />
               </div>

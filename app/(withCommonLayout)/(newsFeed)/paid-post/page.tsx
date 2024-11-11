@@ -15,7 +15,7 @@ const PaidPostPage = () => {
   const { mutate: verifiedUser } = useVerifiedUser();
 
   const handleVerifiedUser = () => {
-    const response = verifiedUser();
+    verifiedUser();
   };
 
   return (

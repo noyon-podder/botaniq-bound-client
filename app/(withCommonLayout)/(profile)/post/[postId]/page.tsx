@@ -5,7 +5,6 @@ import PostDetails from "@/components/module/Post/PostDetails";
 import Container from "@/components/shared/Container";
 import Loading from "@/components/shared/Loading";
 import { useUserInformation } from "@/context/UserInfoProvider";
-import { useUser } from "@/context/UserProvider";
 import { useCreateComment } from "@/hooks/comment.hook";
 import { useGetPostById } from "@/hooks/post.hook";
 import { Loader, Send } from "lucide-react";
