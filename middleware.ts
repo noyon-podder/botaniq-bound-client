@@ -14,7 +14,7 @@ const roleBasedRoutes = {
     /^\/paid-post(\/.*)?$/,
   ],
   ADMIN: [
-    /^\/admin-dashboard\/[^\/]+$/,
+    /^\/admin-dashboard(\/[^\/]*)?$/,
     /^\/post(\/[^\/]*)?$/,
     /^\/profile(\/.*)?$/,
     /^\/paid-post(\/.*)?$/,
@@ -24,6 +24,8 @@ const roleBasedRoutes = {
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const user = await getCurrentUser();
+
+  console.log({ user });
 
   // IF ACCESS TOKEN NOT HERE IN TO COOKIES SO SEND USER INTO LOGIN PAGE
   if (!user) {
@@ -44,6 +46,7 @@ export async function middleware(request: NextRequest) {
       return NextResponse.next();
     }
   }
+
   return NextResponse.redirect(new URL("/", request.url));
 }
 

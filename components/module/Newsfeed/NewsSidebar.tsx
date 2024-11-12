@@ -31,12 +31,13 @@ const routes = [
 
 const NewsSidebar = () => {
   const pathname = usePathname();
-  const { user } = useUserInformation();
+  const { user, isLoading } = useUserInformation();
 
   return (
     <div className="">
       {user && (
         <>
+          {isLoading && <p>Loading....</p>}
           <div className="flex items-center gap-3 mt-2">
             <div>
               <Image
@@ -53,7 +54,7 @@ const NewsSidebar = () => {
 
             <div className="flex flex-col">
               <Link href={"#"} className="text-base font-semibold">
-                Jhon Doe
+                {user?.name}
               </Link>
               <span className="lowercase text-primary text-xs">
                 {user?.role}

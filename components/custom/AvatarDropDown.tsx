@@ -81,7 +81,7 @@ const AvatarDropDown = () => {
 
           <li
             onClick={handleLogout}
-            className="px-3 py-[10px] border-b border-border text-muted-foreground text-base font-normal hover:bg-primary hover:text-white  flex items-center gap-2"
+            className="px-3 py-[10px] border-b border-border text-muted-foreground text-base font-normal hover:bg-primary hover:text-white  flex items-center gap-2 cursor-pointer"
           >
             <LogOutIcon size={20} />
             Log out

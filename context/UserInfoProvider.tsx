@@ -10,7 +10,7 @@ import {
 } from "react";
 // import { useUser } from "./UserProvider";
 
-import { useGetMe } from "@/hooks/user.hook";
+import { getMe } from "@/services/User";
 
 interface IUserProviderValues {
   user: TUser | null;
@@ -27,16 +27,16 @@ const UserInfoProvider = ({ children }: { children: ReactNode }) => {
 
   console.log("User Provider: ", userInfo);
 
-  // const { data, isFetching } = useGetSingleUser(user?._id as string);
-  const { data, isFetching } = useGetMe();
+  const handleUser = async () => {
+    const user = await getMe();
 
-  console.log("GET ME USER FROM USE PROVIDER", data);
+    setUserInfo(user?.data);
+    setIsLoading(false);
+  };
+
   useEffect(() => {
-    if (data?.data && !isFetching) {
-      setUserInfo(data?.data);
-      setIsLoading(false);
-    }
-  }, [data?.data, isFetching]);
+    handleUser();
+  }, [isLoading]);
 
   return (
     <UserContext.Provider

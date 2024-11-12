@@ -7,12 +7,12 @@ import { Button } from "../ui/button";
 import { ThemeToggle } from "./ThemeToggle";
 import { useState } from "react";
 import MenuSidebarToggle from "../custom/MenuSidebarToggle";
-import { useUser } from "@/context/UserProvider";
 import AvatarDropDown from "../custom/AvatarDropDown";
+import { useUserInformation } from "@/context/UserInfoProvider";
 
 const Navbar = () => {
   const [searchShow, setSearchShow] = useState(false);
-  const { user } = useUser();
+  const { user } = useUserInformation();
 
   // const [searchValue, setSearchValue] = useState("");
 
@@ -56,14 +56,6 @@ const Navbar = () => {
               <Button>Login</Button>
             </Link>
           ) : (
-            // <Button
-            //   onClick={() => handleLogout()}
-            //   className=""
-            //   variant={"outline"}
-            //   size="sm"
-            // >
-            //   Logout
-            // </Button>
             <AvatarDropDown />
           )}
           <ThemeToggle />
