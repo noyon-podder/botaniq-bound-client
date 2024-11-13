@@ -18,18 +18,32 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 import { useUserInformation } from "@/context/UserInfoProvider";
 import React, { useState } from "react";
 import SidebarSkelleton from "@/components/loading/SidebarSkelleton";
 import { adminSidebarItems, userSidebarItems } from "@/utils/sidebarRoutes";
 import { TSidebarItem } from "@/types";
+import { logout } from "@/services/AuthService";
+import { toast } from "@/hooks/use-toast";
 
 export function AppSidebar() {
   const pathname = usePathname();
-  const { user } = useUserInformation();
+  const { user, setIsLoading: userLoading } = useUserInformation();
   const [openItems, setOpenItems] = useState<{ [key: string]: boolean }>({});
+  const router = useRouter();
+
+  // LOGOUT FUNCTIONALITY
+  const handleLogout = () => {
+    logout();
+    userLoading(true);
+    router.push("/");
+
+    toast({
+      title: "Logged out successfully",
+    });
+  };
 
   const toggleItem = (title: string) => {
     setOpenItems((prevOpenItems) => ({
@@ -112,7 +126,10 @@ export function AppSidebar() {
               {user?.role === "ADMIN"
                 ? renderSidebarItems(adminSidebarItems)
                 : renderSidebarItems(userSidebarItems)}
-              <SidebarMenuButton>
+              <SidebarMenuButton
+                className="hover:bg-primary hover:text-white"
+                onClick={handleLogout}
+              >
                 <LogOut />
                 <span>Log Out</span>
               </SidebarMenuButton>

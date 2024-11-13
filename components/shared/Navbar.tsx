@@ -39,9 +39,11 @@ const Navbar = () => {
               </div>
             </div>
 
-            <Link href="/user-dashboard/create-post">
-              <Button>Write Post</Button>
-            </Link>
+            {user?.role === "USER" && (
+              <Link href="/user-dashboard/create-post">
+                <Button>Write Post</Button>
+              </Link>
+            )}
           </div>
         </div>
 
