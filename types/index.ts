@@ -81,3 +81,15 @@ export interface IComment {
   content: string;
   postId: string;
 }
+
+export type TSidebarItem = {
+  title: string;
+  url: string;
+  icon: any;
+  // icon: string;
+  subItems?: {
+    title: string;
+    url: string;
+    icon?: any;
+  }[];
+};

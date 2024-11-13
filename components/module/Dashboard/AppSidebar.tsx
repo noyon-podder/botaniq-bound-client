@@ -1,15 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import {
-  ClipboardEdit,
-  Users,
-  Settings,
-  User,
-  CreditCardIcon,
-  ChevronUp,
-  ChevronDown,
-} from "lucide-react";
+import { ChevronUp, ChevronDown, LogOut } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -27,65 +19,12 @@ import {
 } from "@/components/ui/collapsible";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { DashboardIcon } from "@radix-ui/react-icons";
+
 import { useUserInformation } from "@/context/UserInfoProvider";
 import React, { useState } from "react";
 import SidebarSkelleton from "@/components/loading/SidebarSkelleton";
-
-// Define the type for a sidebar item and its sub-items
-type SidebarItem = {
-  title: string;
-  url: string;
-  icon: any;
-  // icon: string;
-  subItems?: {
-    title: string;
-    url: string;
-    icon?: any;
-  }[];
-};
-
-// Menu items with explicit types
-const adminSidebarItems: SidebarItem[] = [
-  { title: "Admin Dashboard", url: "/admin-dashboard", icon: DashboardIcon },
-  {
-    title: "Manage Users",
-    url: "#",
-    icon: Users,
-    subItems: [
-      { title: "All Users", url: "/all-users", icon: CreditCardIcon },
-      { title: "Create User", url: "/create-user", icon: CreditCardIcon },
-      { title: "Update User", url: "/update-user", icon: CreditCardIcon },
-    ],
-  },
-  {
-    title: "Manage Posts",
-    url: "#",
-    icon: ClipboardEdit,
-    subItems: [
-      { title: "Create Post", url: "/create-post", icon: CreditCardIcon },
-      { title: "Update Post", url: "/update-post", icon: CreditCardIcon },
-    ],
-  },
-  { title: "My Profile", url: "#", icon: User },
-  { title: "Settings", url: "#", icon: Settings },
-];
-
-const userSidebarItems: SidebarItem[] = [
-  { title: "User Dashboard", url: "/user-dashboard", icon: DashboardIcon },
-  {
-    title: "Manage Posts",
-    url: "#",
-    icon: ClipboardEdit,
-    subItems: [
-      { title: "Create Post", url: "/create-post", icon: CreditCardIcon },
-      { title: "Update Post", url: "/update-post", icon: CreditCardIcon },
-      { title: "All Posts", url: "/all-posts", icon: CreditCardIcon },
-    ],
-  },
-  { title: "My Profile", url: "#", icon: User },
-  { title: "Settings", url: "#", icon: Settings },
-];
+import { adminSidebarItems, userSidebarItems } from "@/utils/sidebarRoutes";
+import { TSidebarItem } from "@/types";
 
 export function AppSidebar() {
   const pathname = usePathname();
@@ -99,7 +38,7 @@ export function AppSidebar() {
     }));
   };
 
-  const renderSidebarItems = (items: SidebarItem[]) =>
+  const renderSidebarItems = (items: TSidebarItem[]) =>
     items.map((item) => (
       <SidebarMenuItem key={item.title}>
         {item.subItems ? (
@@ -110,9 +49,7 @@ export function AppSidebar() {
             <CollapsibleTrigger className="flex items-center justify-between cursor-pointer p-2 w-full">
               <React.Suspense fallback={<SidebarSkelleton />}>
                 <div className="flex items-center gap-2 w-full">
-                  <item.icon size={20} />{" "}
-                  {/* Icon is rendered as a component */}
-                  <span>{item.title}</span>
+                  <item.icon size={20} /> <span>{item.title}</span>
                 </div>
                 <span>
                   {openItems[item.title] ? (
@@ -175,6 +112,10 @@ export function AppSidebar() {
               {user?.role === "ADMIN"
                 ? renderSidebarItems(adminSidebarItems)
                 : renderSidebarItems(userSidebarItems)}
+              <SidebarMenuButton>
+                <LogOut />
+                <span>Log Out</span>
+              </SidebarMenuButton>
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
