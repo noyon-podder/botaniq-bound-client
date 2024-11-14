@@ -66,7 +66,9 @@ const Post = ({ post }: { post: IPost }) => {
         </Link>
 
         <div className="flex flex-col">
-          <h2 className="font-medium text-lg">{name}</h2>
+          <Link href={`/profile/${authorId}`} className="font-medium text-lg">
+            {name}
+          </Link>
           <p className="text-sm text-muted-foreground">{timeAgo}</p>
         </div>
       </div>
