@@ -7,15 +7,15 @@ import Image from "next/image";
 import Link from "next/link";
 
 const PopularPost = () => {
-  const { data, isFetching } = useGetPopularPost();
+  const { data, isLoading } = useGetPopularPost();
   return (
     <div>
       <h2 className="text-lg font-semibold">Popular Posts</h2>
 
-      {isFetching && <PopularPostLoadingSkeleton />}
+      {isLoading && <PopularPostLoadingSkeleton />}
 
       {data?.data?.map((post: IPost) => (
-        <div key={post?._id} className="mt-3">
+        <div key={post?._id} className="">
           <div className="flex items-center gap-3 mt-2">
             <div>
               <Image

@@ -7,7 +7,7 @@ import { defaultUserImage } from "@/utils/defaultUser";
 import Link from "next/link";
 
 const TopWriters = () => {
-  const { data, isFetching } = useTopWriters();
+  const { data, isLoading } = useTopWriters();
 
   const topWriterData = data?.data?.slice(0, 5);
 
@@ -15,7 +15,7 @@ const TopWriters = () => {
     <div className="xl:mb-10 lg:mb-9 md:mb-8 mb-5">
       <h2 className="text-lg font-semibold">Top Writers</h2>
 
-      {isFetching && <PopularPostLoadingSkeleton />}
+      {isLoading && <PopularPostLoadingSkeleton />}
       <div>
         {topWriterData?.map((item: any) => (
           <div key={item?._id} className="">
