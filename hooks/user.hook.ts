@@ -8,6 +8,7 @@ import {
   getAllPostsByUserId,
   getMe,
   getSingleUser,
+  getTopWriters,
   profilePictureUpload,
   verifyUser,
 } from "@/services/User";
@@ -164,5 +165,13 @@ export const useFollowUser = () => {
         title: error.message || "An unknown error occurred.",
       });
     },
+  });
+};
+
+// TOP WRITERS
+export const useTopWriters = () => {
+  return useQuery({
+    queryKey: ["SINGLE_USER", "GET_ME", "POST"],
+    queryFn: async () => await getTopWriters(),
   });
 };

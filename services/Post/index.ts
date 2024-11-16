@@ -122,3 +122,22 @@ export const downvotePost = async (id: string) => {
     return { error: error.message || "An unknown error occurred." };
   }
 };
+
+// POPULAR POSTS
+export const popularPosts = async () => {
+  try {
+    const { data } = await axiosInstance.get(`/post/popular/posts`);
+
+    return data;
+  } catch (error: any) {
+    console.error("Axios Error", error);
+
+    if (error.response) {
+      const errorMessage =
+        error.response.data?.message || "Failed to Retrieve Post";
+      return { error: errorMessage };
+    }
+
+    return { error: error.message || "An unknown error occurred." };
+  }
+};

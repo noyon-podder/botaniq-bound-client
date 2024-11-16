@@ -40,7 +40,11 @@ export const userSidebarItems: TSidebarItem[] = [
     url: "#",
     icon: ClipboardEdit,
     subItems: [
-      { title: "Create Post", url: "/create-post", icon: CreditCardIcon },
+      {
+        title: "Create Post",
+        url: "/user-dashboard/create-post",
+        icon: CreditCardIcon,
+      },
       { title: "Update Post", url: "/update-post", icon: CreditCardIcon },
       { title: "All Posts", url: "/all-posts", icon: CreditCardIcon },
     ],

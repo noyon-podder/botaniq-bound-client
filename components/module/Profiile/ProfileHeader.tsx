@@ -62,7 +62,10 @@ const ProfileHeader = ({ userInfo, paramsId }: IProps) => {
         ) : (
           userInfo?.coverPhoto && (
             <Image
-              src={userInfo?.coverPhoto as string}
+              src={
+                (userInfo?.coverPhoto as string) ||
+                "https://images.pexels.com/photos/413195/pexels-photo-413195.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+              }
               alt="Cover Photo"
               width={1280}
               height={600}

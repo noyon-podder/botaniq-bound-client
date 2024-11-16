@@ -113,7 +113,7 @@ export function AppSidebar() {
 
   return (
     <Sidebar>
-      <div className="text-center py-5 border-b">
+      <div className="flex items-center justify-center h-14 border-b">
         <Link href="/" className="text-[22px] font-bold text-foreground">
           Leaf<span className="text-primary">Link</span>
         </Link>

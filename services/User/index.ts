@@ -146,3 +146,23 @@ export const followUser = async (targetedUserId: string) => {
     return { error: error.message || "An unknown error occurred." };
   }
 };
+
+// TOP WRITERS
+export const getTopWriters = async () => {
+  try {
+    const { data } = await axiosInstance.get(`/user/writer/top-writers`);
+
+    console.log(data);
+    return data;
+  } catch (error: any) {
+    console.error("Axios Error", error);
+
+    if (error.response) {
+      const errorMessage =
+        error.response.data?.message || "Failed to Find user.";
+      return { error: errorMessage };
+    }
+
+    return { error: error.message || "An unknown error occurred." };
+  }
+};

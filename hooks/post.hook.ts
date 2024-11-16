@@ -7,6 +7,7 @@ import {
   getAllPaidPost,
   getAllPost,
   getPostById,
+  popularPosts,
   upvotePost,
 } from "@/services/Post";
 import { queryClient } from "@/lib/Provider";
@@ -113,5 +114,13 @@ export const useDownVotes = () => {
         title: error.message || "An unknown error occurred.",
       });
     },
+  });
+};
+
+// POPULAR POST
+export const useGetPopularPost = () => {
+  return useQuery({
+    queryKey: ["POPULAR_POSTS"],
+    queryFn: async () => await popularPosts(),
   });
 };

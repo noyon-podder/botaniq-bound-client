@@ -12,6 +12,7 @@ import { useDownVotes, useUpVotes } from "@/hooks/post.hook";
 import { IPost } from "@/types";
 import { useUserInformation } from "@/context/UserInfoProvider";
 import { useRouter } from "next/navigation";
+import { toast } from "@/hooks/use-toast";
 
 const Post = ({ post }: { post: IPost }) => {
   const { user } = useUserInformation();
@@ -48,6 +49,20 @@ const Post = ({ post }: { post: IPost }) => {
     }
 
     handleDownVote(postId);
+  };
+
+  const copyCurrentURL = (postURL: string) => {
+    const currentURL = window.location.href + postURL;
+    navigator.clipboard
+      .writeText(currentURL)
+      .then(() => {
+        toast({
+          title: "Link Copy",
+        });
+      })
+      .catch((error) => {
+        console.error("Failed to copy the URL: ", error);
+      });
   };
 
   return (
@@ -169,7 +184,10 @@ const Post = ({ post }: { post: IPost }) => {
             Comment
           </div>
         </Link>
-        <div className="flex items-center gap-2 px-4 bg-transparent hover:bg-gray-200 dark:hover:bg-gray-800 cursor-pointer rounded-md py-2">
+        <div
+          onClick={() => copyCurrentURL(`/post/${postId}`)}
+          className="flex items-center gap-2 px-4 bg-transparent hover:bg-gray-200 dark:hover:bg-gray-800 cursor-pointer rounded-md py-2"
+        >
           <Copy className="text-gray-400" />
           Copy
         </div>
