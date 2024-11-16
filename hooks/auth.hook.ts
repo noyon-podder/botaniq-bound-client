@@ -45,6 +45,8 @@ export const useUserLogin = () => {
     mutationFn: async (userData) => {
       const response = await loginUser(userData);
       if (response.error) throw new Error(response.error);
+
+      console.log({ response });
       return response;
     },
     onSuccess: () => {

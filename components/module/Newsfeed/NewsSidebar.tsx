@@ -251,7 +251,7 @@ const NewsSidebar = () => {
           <li key={route.id}>
             <Link
               href={route.path}
-              className={`flex items-center gap-4  py-3  text-lg font-medium hover:text-primary ${
+              className={`flex items-center gap-4  py-2  text-lg font-medium hover:text-primary ${
                 pathname === route.path ? "text-primary" : "text-foreground"
               }`}
             >
