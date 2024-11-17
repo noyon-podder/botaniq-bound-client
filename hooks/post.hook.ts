@@ -8,6 +8,7 @@ import {
   getAllPost,
   getPostById,
   popularPosts,
+  postByUser,
   upvotePost,
 } from "@/services/Post";
 import { queryClient } from "@/lib/Provider";
@@ -122,5 +123,13 @@ export const useGetPopularPost = () => {
   return useQuery({
     queryKey: ["POPULAR_POSTS"],
     queryFn: async () => await popularPosts(),
+  });
+};
+
+// POPULAR POST
+export const useGetPostByLoginUser = () => {
+  return useQuery({
+    queryKey: ["POST", "POST_BY_USER"],
+    queryFn: async () => await postByUser(),
   });
 };

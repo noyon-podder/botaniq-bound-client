@@ -141,3 +141,22 @@ export const popularPosts = async () => {
     return { error: error.message || "An unknown error occurred." };
   }
 };
+
+// POST BY USER
+export const postByUser = async () => {
+  try {
+    const { data } = await axiosInstance.get(`/post/posts/by-user`);
+
+    return data;
+  } catch (error: any) {
+    console.error("Axios Error", error);
+
+    if (error.response) {
+      const errorMessage =
+        error.response.data?.message || "Failed to Retrieve Post";
+      return { error: errorMessage };
+    }
+
+    return { error: error.message || "An unknown error occurred." };
+  }
+};

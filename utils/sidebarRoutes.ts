@@ -4,6 +4,9 @@ import {
   Settings,
   User,
   CreditCardIcon,
+  Cog,
+  FilePlus2,
+  FileSpreadsheet,
 } from "lucide-react";
 import { DashboardIcon } from "@radix-ui/react-icons";
 import { TSidebarItem } from "@/types";
@@ -38,17 +41,25 @@ export const userSidebarItems: TSidebarItem[] = [
   {
     title: "Manage Posts",
     url: "#",
-    icon: ClipboardEdit,
+    icon: Cog,
     subItems: [
       {
         title: "Create Post",
         url: "/user-dashboard/create-post",
-        icon: CreditCardIcon,
+        icon: FilePlus2,
       },
-      { title: "Update Post", url: "/update-post", icon: CreditCardIcon },
-      { title: "All Posts", url: "/all-posts", icon: CreditCardIcon },
+      {
+        title: "Update Post",
+        url: "/user-dashboard/update-post",
+        icon: ClipboardEdit,
+      },
+      {
+        title: "All Posts",
+        url: "/user-dashboard/all-posts",
+        icon: FileSpreadsheet,
+      },
     ],
   },
-  { title: "My Profile", url: "#", icon: User },
+  { title: "Profile", url: "#", icon: User },
   { title: "Settings", url: "#", icon: Settings },
 ];
