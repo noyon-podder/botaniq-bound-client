@@ -13,6 +13,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useUserInformation } from "@/context/UserInfoProvider";
 import { LogOutIcon, UserCircle } from "lucide-react";
 import { DashboardIcon } from "@radix-ui/react-icons";
+import { defaultUserImage } from "@/utils/defaultUser";
 
 const AvatarDropDown = () => {
   // const { user, setIsLoading: userLoading } = useUser();
@@ -36,7 +37,7 @@ const AvatarDropDown = () => {
       <DropdownMenuTrigger asChild>
         <Avatar className="cursor-pointer">
           <AvatarImage
-            src={userInfo?.profilePicture}
+            src={userInfo?.profilePicture || defaultUserImage}
             className=""
             alt="User Profile"
           />
