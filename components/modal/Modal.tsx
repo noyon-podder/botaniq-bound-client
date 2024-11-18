@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ReactNode } from "react";
 import {
   Dialog,
@@ -9,7 +10,7 @@ import {
 } from "../ui/dialog";
 
 interface IProps {
-  triggerButton: string;
+  triggerButton: any;
   title: string;
   children: ReactNode;
 }
