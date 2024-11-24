@@ -1,16 +1,13 @@
 "use client";
 
 import TableSkeleton from "@/components/loading/TableSkeleton";
-import Table from "@/components/module/Dashboard/Table";
-import TableData from "@/components/module/Dashboard/TableData";
+
+import TableData from "@/components/module/Dashboard/PostTable";
 import { useGetPostByLoginUser } from "@/hooks/post.hook";
 
 const AllPosts = () => {
   const { data, isLoading } = useGetPostByLoginUser();
 
-  // if (isLoading) {
-  //   return <TableSkeleton />;
-  // }
   console.log("ALL POsts", data, "UserId");
   return (
     <div className="p-10">

@@ -11,7 +11,7 @@ import {
 
 interface IProps {
   triggerButton: any;
-  title: string;
+  title?: string;
   children: ReactNode;
 }
 
